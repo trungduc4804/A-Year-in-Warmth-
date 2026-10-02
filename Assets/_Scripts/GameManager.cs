@@ -284,6 +284,69 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("[GameManager] 🌸 Đã sinh Cây Đào Phai (PhotoTarget) tại toạ độ: " + treeObj.transform.position);
         }
+
+        // 3. Tạo Chiếu Gói Bánh Chưng bên hiên nhà gần Bác An
+        BanhChungTable existingTable = FindAnyObjectByType<BanhChungTable>();
+        if (existingTable == null)
+        {
+            GameObject tableObj = new GameObject("Chiếu Gói Bánh Chưng (Bánh Chưng Table)");
+            tableObj.transform.position = playerPos + new Vector3(2.5f, -1.8f, 0f);
+
+            // Chiếu cói vàng rơm
+            GameObject mat = new GameObject("StrawMat");
+            mat.transform.SetParent(tableObj.transform);
+            mat.transform.localPosition = Vector3.zero;
+            mat.transform.localScale = new Vector3(1.8f, 1.4f, 1f);
+            SpriteRenderer matSr = mat.AddComponent<SpriteRenderer>();
+            matSr.sprite = CreateSimpleSquareSprite();
+            matSr.color = new Color(0.88f, 0.80f, 0.62f, 1f); // Vàng rơm
+            matSr.sortingOrder = 2;
+
+            // Viền đỏ chiếu hoa
+            GameObject border = new GameObject("MatBorder");
+            border.transform.SetParent(tableObj.transform);
+            border.transform.localPosition = Vector3.zero;
+            border.transform.localScale = new Vector3(1.9f, 1.5f, 1f);
+            SpriteRenderer borderSr = border.AddComponent<SpriteRenderer>();
+            borderSr.sprite = CreateSimpleSquareSprite();
+            borderSr.color = new Color(0.75f, 0.22f, 0.18f, 1f); // Đỏ điều
+            borderSr.sortingOrder = 1;
+
+            // Chiếc khuôn gỗ vuông ở giữa chiếu
+            GameObject mold = new GameObject("WoodenMold");
+            mold.transform.SetParent(tableObj.transform);
+            mold.transform.localPosition = new Vector3(0f, 0f, 0f);
+            mold.transform.localScale = new Vector3(0.55f, 0.55f, 1f);
+            SpriteRenderer moldSr = mold.AddComponent<SpriteRenderer>();
+            moldSr.sprite = CreateSimpleSquareSprite();
+            moldSr.color = new Color(0.52f, 0.35f, 0.22f, 1f); // Gỗ nâu
+            moldSr.sortingOrder = 4;
+
+            // Đĩa lá dong xanh bên cạnh khuôn
+            GameObject leafPlate = new GameObject("DongLeaves");
+            leafPlate.transform.SetParent(tableObj.transform);
+            leafPlate.transform.localPosition = new Vector3(-0.55f, 0f, 0f);
+            leafPlate.transform.localScale = new Vector3(0.4f, 0.6f, 1f);
+            SpriteRenderer leafSr = leafPlate.AddComponent<SpriteRenderer>();
+            leafSr.sprite = CreateSimpleSquareSprite();
+            leafSr.color = new Color(0.24f, 0.58f, 0.28f, 1f); // Xanh lá dong
+            leafSr.sortingOrder = 3;
+
+            // Thúng gạo nếp trắng thơm
+            GameObject riceBasket = new GameObject("RiceBasket");
+            riceBasket.transform.SetParent(tableObj.transform);
+            riceBasket.transform.localPosition = new Vector3(0.55f, 0.2f, 0f);
+            riceBasket.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
+            SpriteRenderer riceSr = riceBasket.AddComponent<SpriteRenderer>();
+            riceSr.sprite = CreateSimpleSquareSprite();
+            riceSr.color = new Color(0.96f, 0.95f, 0.90f, 1f); // Trắng nếp
+            riceSr.sortingOrder = 3;
+
+            // Gắn thành phần tương tác BanhChungTable
+            tableObj.AddComponent<BanhChungTable>();
+
+            Debug.Log("[GameManager] 🍱 Đã sinh Chiếu Gói Bánh Chưng tại toạ độ: " + tableObj.transform.position);
+        }
     }
 
     private Sprite CreateSimpleSquareSprite()
@@ -326,56 +389,60 @@ public class GameManager : MonoBehaviour
 
         Color oldColor = GUI.color;
 
-        // 1. BẢNG THEO DÕI NHIỆM VỤ (QUEST TRACKER HUD) - Nằm ở góc trên bên phải
-        float hudW = 310f;
-        float hudH = 100f;
-        Rect hudRect = new Rect(Screen.width - hudW - 20f, 20f, hudW, hudH);
-
-        // Bóng đổ
-        GUI.color = new Color(0f, 0f, 0f, 0.35f);
-        GUI.DrawTexture(new Rect(hudRect.x + 4, hudRect.y + 4, hudRect.width, hudRect.height), darkPixel);
-
-        // Nền tối ấm áp
-        GUI.color = new Color(0.12f, 0.14f, 0.18f, 0.93f);
-        GUI.DrawTexture(hudRect, darkPixel);
-
-        // Viền vàng kim
-        GUI.color = new Color(0.85f, 0.72f, 0.45f, 0.95f);
-        DrawFrameBorders(hudRect, 1.5f);
-
-        // Tiêu đề bảng nhiệm vụ
-        GUI.color = Color.white;
-        Rect titleRect = new Rect(hudRect.x + 12, hudRect.y + 8, hudRect.width - 24, 24);
-        GUI.Label(titleRect, "🌸 NHIỆM VỤ: MÙA ĐÀO PHAI", questTitleStyle);
-
-        // Nội dung mục tiêu hiện tại theo QuestState
-        Rect descRect = new Rect(hudRect.x + 12, hudRect.y + 36, hudRect.width - 24, 56);
-        string questStatusText = "";
-        Color statusColor = Color.white;
-
-        switch (currentQuestState)
+        // 1. BẢNG THEO DÕI NHIỆM VỤ (QUEST TRACKER HUD) - Nằm ở góc trên bên phải (ẩn khi đang mở Minigame)
+        bool isMinigameOpen = BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen;
+        if (!isMinigameOpen)
         {
-            case QuestState.NotStarted:
-                questStatusText = "• Bước 1: Đến gặp và trò chuyện cùng Bác An trước hiên nhà [Phím E].";
-                statusColor = new Color(0.85f, 0.85f, 0.85f, 1f);
-                break;
-            case QuestState.QuestAccepted:
-                questStatusText = "• Bước 2: Dùng máy ảnh [Phím Space] chụp lại Cành Đào Phai trước hiên nhà [0/1].";
-                statusColor = new Color(1.0f, 0.85f, 0.45f, 1f);
-                break;
-            case QuestState.PhotoTaken:
-                questStatusText = "• Bước 3: Đã chụp được ảnh! Hãy mang về đưa cho Bác An [Phím E] [1/1].";
-                statusColor = new Color(0.55f, 0.95f, 0.65f, 1f);
-                break;
-            case QuestState.Completed:
-                questStatusText = "• Hoàn thành: Bác An đã nhận được bức ảnh cành đào phai ấm áp. ✓";
-                statusColor = new Color(0.45f, 0.85f, 1.0f, 1f);
-                break;
-        }
+            float hudW = 310f;
+            float hudH = 100f;
+            Rect hudRect = new Rect(Screen.width - hudW - 20f, 20f, hudW, hudH);
 
-        GUIStyle currentStatusStyle = new GUIStyle(questObjectiveStyle);
-        currentStatusStyle.normal.textColor = statusColor;
-        GUI.Label(descRect, questStatusText, currentStatusStyle);
+            // Bóng đổ
+            GUI.color = new Color(0f, 0f, 0f, 0.35f);
+            GUI.DrawTexture(new Rect(hudRect.x + 4, hudRect.y + 4, hudRect.width, hudRect.height), darkPixel);
+
+            // Nền tối ấm áp
+            GUI.color = new Color(0.12f, 0.14f, 0.18f, 0.93f);
+            GUI.DrawTexture(hudRect, darkPixel);
+
+            // Viền vàng kim
+            GUI.color = new Color(0.85f, 0.72f, 0.45f, 0.95f);
+            DrawFrameBorders(hudRect, 1.5f);
+
+            // Tiêu đề bảng nhiệm vụ
+            GUI.color = Color.white;
+            Rect titleRect = new Rect(hudRect.x + 12, hudRect.y + 8, hudRect.width - 24, 24);
+            GUI.Label(titleRect, "🌸 NHIỆM VỤ: MÙA ĐÀO PHAI", questTitleStyle);
+
+            // Nội dung mục tiêu hiện tại theo QuestState
+            Rect descRect = new Rect(hudRect.x + 12, hudRect.y + 36, hudRect.width - 24, 56);
+            string questStatusText = "";
+            Color statusColor = Color.white;
+
+            switch (currentQuestState)
+            {
+                case QuestState.NotStarted:
+                    questStatusText = "• Bước 1: Đến gặp và trò chuyện cùng Bác An trước hiên nhà [Phím E].";
+                    statusColor = new Color(0.85f, 0.85f, 0.85f, 1f);
+                    break;
+                case QuestState.QuestAccepted:
+                    questStatusText = "• Bước 2: Dùng máy ảnh [Phím Space] chụp lại Cành Đào Phai trước hiên nhà [0/1].";
+                    statusColor = new Color(1.0f, 0.85f, 0.45f, 1f);
+                    break;
+                case QuestState.PhotoTaken:
+                    questStatusText = "• Bước 3: Đã chụp được ảnh! Hãy mang về đưa cho Bác An [Phím E] [1/1].";
+                    statusColor = new Color(0.55f, 0.95f, 0.65f, 1f);
+                    break;
+                case QuestState.Completed:
+                    questStatusText = "• Hoàn thành: Bác An đã nhận được bức ảnh cành đào phai ấm áp. ✓";
+                    statusColor = new Color(0.45f, 0.85f, 1.0f, 1f);
+                    break;
+            }
+
+            GUIStyle currentStatusStyle = new GUIStyle(questObjectiveStyle);
+            currentStatusStyle.normal.textColor = statusColor;
+            GUI.Label(descRect, questStatusText, currentStatusStyle);
+        }
 
         // 2. THÔNG BÁO TOAST NỔI KHI CẬP NHẬT TRẠNG THÁI
         if (toastTimer > 0f)

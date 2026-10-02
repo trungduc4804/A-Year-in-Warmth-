@@ -178,7 +178,8 @@ public class NPCInteractable : MonoBehaviour
                     string[] state3Lines = new string[]
                     {
                         "Cảm ơn cháu lần nữa nhé Arthur. Nhờ bức ảnh của cháu mà mùa xuân này trong căn nhà nhỏ của bác ấm áp hơn hẳn.",
-                        "Chúc cháu một ngày dạo bước ngắm cảnh thật an lành và chụp được thêm nhiều khoảnh khắc đẹp nhé!"
+                        "À cháu này! Bên hiên nhà bác có trải sẵn manh chiếu, lá dong, thúng nếp và thịt mỡ để gói Bánh Chưng đón Tết đấy.",
+                        "Cháu hãy lại chiếc chiếu cạnh bác rồi bấm [E] (hoặc bấm phím [B]) thử trổ tài gói một chiếc bánh chưng vuông vức xem sao nhé!"
                     };
                     DialogueManager.Instance.StartDialogue(speaker, state3Lines);
                     return;

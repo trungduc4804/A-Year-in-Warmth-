@@ -143,12 +143,13 @@ public class AlbumUIController : MonoBehaviour
         // 1. Phím Tab: Bật/Tắt Album
         if (Input.GetKeyDown(toggleKey))
         {
-            // Không mở Album nếu đang chụp ảnh Viewfinder hoặc đang trong hội thoại
+            // Không mở Album nếu đang chụp ảnh Viewfinder hoặc đang trong hội thoại hoặc đang gói bánh chưng
             bool isDialogueActive = DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive;
             ViewfinderController viewfinder = FindAnyObjectByType<ViewfinderController>();
             bool isViewfinderActive = viewfinder != null && viewfinder.IsViewfinderActive;
+            bool isMinigameOpen = BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen;
 
-            if (isDialogueActive || isViewfinderActive) return;
+            if (isDialogueActive || isViewfinderActive || isMinigameOpen) return;
 
             ToggleAlbum();
         }

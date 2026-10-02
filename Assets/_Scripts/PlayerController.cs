@@ -251,6 +251,12 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.AddComponent<AlbumUIController>();
         }
+
+        // 9. Tự động gắn BanhChungMinigame (Minigame gói bánh chưng truyền thống) nếu chưa có
+        if (FindAnyObjectByType<BanhChungMinigame>() == null)
+        {
+            gameObject.AddComponent<BanhChungMinigame>();
+        }
     }
 
     private void Update()
@@ -294,7 +300,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void ReadInput()
     {
-        if (isInputLocked)
+        bool isMinigameOpen = BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen;
+        if (isInputLocked || isMinigameOpen)
         {
             inputVector = Vector2.zero;
             normalizedMoveDirection = Vector2.zero;
@@ -589,7 +596,7 @@ public class PlayerController : MonoBehaviour
         if (!showDebugHUD || !Application.isPlaying) return;
 
         // Bảng giao diện HUD tiện lợi để theo dõi cảm giác di chuyển khi Play Mode
-        GUILayout.BeginArea(new Rect(18, 18, 330, 285), GUI.skin.box);
+        GUILayout.BeginArea(new Rect(18, 18, 330, 305), GUI.skin.box);
         
         GUIStyle headerStyle = new GUIStyle(GUI.skin.label)
         {
@@ -601,7 +608,8 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("🌿 A Year in Warmth - Character Controller", headerStyle);
         GUILayout.Space(4);
 
-        string paceState = (AlbumUIController.Instance != null && AlbumUIController.Instance.IsOpen) ? "Đang mở Cuốn Album Kỷ Niệm" :
+        string paceState = (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen) ? "Đang gói bánh chưng ngày Tết" :
+                           (AlbumUIController.Instance != null && AlbumUIController.Instance.IsOpen) ? "Đang mở Cuốn Album Kỷ Niệm" :
                            (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive) ? "Đang trò chuyện cùng NPC" :
                            isInputLocked ? "Đang ngắm máy ảnh (Viewfinder Mode)" :
                            !isMoving ? "Đang dừng chân ngắm cảnh (Idle)" :
@@ -619,6 +627,7 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("📸 [Phím cách Space]: Mở/Đóng khung ngắm chụp ảnh");
         GUILayout.Label("💬 [E]: Tương tác trò chuyện khi lại gần NPC");
         GUILayout.Label("📖 [Tab]: Mở Cuốn Album Kỷ Niệm của Arthur");
+        GUILayout.Label("🍱 [B]: Minigame Gói Bánh Chưng Ngày Tết");
 
         GUILayout.EndArea();
     }
