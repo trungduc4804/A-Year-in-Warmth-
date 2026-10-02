@@ -355,8 +355,7 @@ public class DialogueManager : MonoBehaviour
         {
             alignment = TextAnchor.UpperLeft,
             fontSize = 15,
-            wordWrap = true,
-            lineSpacing = 1.35f
+            wordWrap = true
         };
         bodyTextStyle.normal.textColor = new Color(0.96f, 0.95f, 0.92f, 1f);
 
