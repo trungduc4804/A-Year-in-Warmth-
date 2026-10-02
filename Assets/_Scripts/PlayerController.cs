@@ -94,6 +94,13 @@ public class PlayerController : MonoBehaviour
     [Range(0.01f, 0.12f)]
     public float bobAmplitude = 0.04f;
 
+    [Header("=== TRẠNG THÁI KHÓA ĐIỀU KHIỂN ===")]
+    [Tooltip("Khóa di chuyển nhân vật (dùng khi đang mở khung ngắm máy ảnh, hội thoại...).")]
+    public bool isInputLocked = false;
+
+    [Tooltip("Khóa camera theo sau nhân vật (để ống kính máy ảnh tự do di chuyển ngắm cảnh).")]
+    public bool isCameraFollowLocked = false;
+
     [Header("=== THEO DÕI CAMERA (SMOOTH CAMERA FOLLOW) ===")]
     [Tooltip("Gắn Main Camera vào đây để camera bám theo nhân vật một cách êm ái.")]
     public Transform cameraTransform;
@@ -217,6 +224,12 @@ public class PlayerController : MonoBehaviour
         {
             cameraTransform = Camera.main.transform;
         }
+
+        // 5. Tự động gắn ViewfinderController (Cơ chế ngắm chụp ảnh) nếu chưa có
+        if (FindAnyObjectByType<ViewfinderController>() == null)
+        {
+            gameObject.AddComponent<ViewfinderController>();
+        }
     }
 
     private void Update()
@@ -260,6 +273,15 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void ReadInput()
     {
+        if (isInputLocked)
+        {
+            inputVector = Vector2.zero;
+            normalizedMoveDirection = Vector2.zero;
+            isMoving = false;
+            isJogging = false;
+            return;
+        }
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -476,7 +498,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void HandleCameraFollow()
     {
-        if (!enableCameraFollow || cameraTransform == null) return;
+        if (!enableCameraFollow || isCameraFollowLocked || cameraTransform == null) return;
 
         Vector3 targetCamPos = transform.position + cameraOffset;
 
@@ -533,7 +555,7 @@ public class PlayerController : MonoBehaviour
         if (!showDebugHUD || !Application.isPlaying) return;
 
         // Bảng giao diện HUD tiện lợi để theo dõi cảm giác di chuyển khi Play Mode
-        GUILayout.BeginArea(new Rect(18, 18, 330, 220), GUI.skin.box);
+        GUILayout.BeginArea(new Rect(18, 18, 330, 245), GUI.skin.box);
         
         GUIStyle headerStyle = new GUIStyle(GUI.skin.label)
         {
@@ -545,7 +567,8 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("🌿 A Year in Warmth - Character Controller", headerStyle);
         GUILayout.Space(4);
 
-        string paceState = !isMoving ? "Đang dừng chân ngắm cảnh (Idle)" :
+        string paceState = isInputLocked ? "Đang ngắm máy ảnh (Viewfinder Mode)" :
+                           !isMoving ? "Đang dừng chân ngắm cảnh (Idle)" :
                            isJogging ? "Rảo bước nhanh (Jogging)" : "Đi bộ thư thả (Scenic Walk)";
 
         GUILayout.Label($"• Trạng thái: {paceState}");
@@ -557,6 +580,7 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("💡 [WASD / Phím mũi tên]: Di chuyển 8 hướng");
         GUILayout.Label($"💡 [{jogKey}]: Giữ để rảo bước nhanh ({jogSpeed:F1} u/s)");
         GUILayout.Label("💡 Thả phím: Nhân vật dừng lại ngay lập tức");
+        GUILayout.Label("📸 [Phím cách Space]: Mở/Đóng khung ngắm chụp ảnh");
 
         GUILayout.EndArea();
     }
