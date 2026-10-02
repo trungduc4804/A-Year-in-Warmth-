@@ -63,6 +63,7 @@ public class AlbumUIController : MonoBehaviour
     private Texture2D coverTex;
     private Texture2D whitePixel;
     private Texture2D darkPixel;
+    private Texture2D banhChungIllustrationTex;
     private GUIStyle bookTitleStyle;
     private GUIStyle polaroidLabelStyle;
     private GUIStyle diaryHeaderStyle;
@@ -258,6 +259,16 @@ public class AlbumUIController : MonoBehaviour
     }
 
     /// <summary>
+    /// Chuyển trực tiếp đến trang cụ thể
+    /// </summary>
+    public void GoToPage(int pageIndex)
+    {
+        currentPageIndex = Mathf.Clamp(pageIndex, 0, TotalPages - 1);
+        PlayPageTurnSound();
+        RefreshAlbumData();
+    }
+
+    /// <summary>
     /// Nạp dữ liệu ảnh động (Dynamic Texture Assignment) và nội dung chữ viết tay vào giao diện
     /// </summary>
     public void RefreshAlbumData()
@@ -294,19 +305,31 @@ public class AlbumUIController : MonoBehaviour
     {
         switch (currentPageIndex)
         {
-            case 0: // Trang 1: Cành Đào Phai của Bác An
+            case 0: // Trang bìa đầu tiên của Chương 1: Cành Đào Phai của Bác An
                 if (GameManager.Instance != null && GameManager.Instance.QuestPhoto != null)
                 {
                     return GameManager.Instance.QuestPhoto;
                 }
+                if (ViewfinderController.Instance != null && ViewfinderController.Instance.LatestCapturedPhoto != null)
+                {
+                    return ViewfinderController.Instance.LatestCapturedPhoto;
+                }
                 return null;
 
-            case 1: // Trang 2: Khu vườn dạo cảnh mùa thu (nếu có ảnh chụp từ Viewfinder)
-            case 2: // Trang 3: Ảnh kỷ niệm tự do
-                ViewfinderController vf = FindAnyObjectByType<ViewfinderController>();
-                if (vf != null && vf.LatestCapturedPhoto != null)
+            case 1: // Trang 2: Chiếc Bánh Chưng Xanh / Nồi Bánh Chưng Luộc Đêm 29 Tết
+                bool hasWrapped = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
+                                  (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.HasCompletedAny);
+                if (hasWrapped)
                 {
-                    return vf.LatestCapturedPhoto;
+                    if (banhChungIllustrationTex == null) banhChungIllustrationTex = GenerateBanhChungKeepsakeTexture();
+                    return banhChungIllustrationTex;
+                }
+                return null;
+
+            case 2: // Trang 3: Lối Đi Mùa Thu / Kỷ Niệm Tự Do
+                if (ViewfinderController.Instance != null && ViewfinderController.Instance.LatestCapturedPhoto != null)
+                {
+                    return ViewfinderController.Instance.LatestCapturedPhoto;
                 }
                 return null;
 
@@ -323,25 +346,40 @@ public class AlbumUIController : MonoBehaviour
         switch (currentPageIndex)
         {
             case 0:
-                bool hasPeachPhoto = GameManager.Instance != null && GameManager.Instance.QuestPhoto != null;
+                bool hasPeachPhoto = (GameManager.Instance != null && GameManager.Instance.QuestPhoto != null) ||
+                                     (ViewfinderController.Instance != null && ViewfinderController.Instance.LatestCapturedPhoto != null);
                 if (hasPeachPhoto)
                 {
-                    return "Hà Nội, chiều muộn 29 Tết.\n" +
-                           "Gió bấc rít qua từng kẽ lá, nhưng vừa bước tới trước hiên nhà Bác An, sắc hồng phai đầu tiên đã sưởi ấm cả khoảng sân nhỏ. Từng cánh hoa mỏng manh khẽ rung rinh trong nắng... Bác An mừng rỡ lắm khi thấy bức ảnh này.";
+                    return "Hà Nội, chiều 29 Tết.\n" +
+                           "Ngày 29 Tết - Cành đào đầu tiên của bác An.\n" +
+                           "Gió bấc rít qua từng kẽ lá, nhưng vừa bước tới trước hiên nhà Bác An, sắc hồng phai đầu tiên đã sưởi ấm cả khoảng sân nhỏ. Từng cánh hoa mỏng manh khẽ rung rinh trong nắng sớm... Bác An nâng niu nhìn bức ảnh này mà rơm rớm khóe mắt. Mùa xuân thực sự đã về rồi.";
+                }
+                else
+                {
+                    return "Hà Nội, chiều 29 Tết.\n" +
+                           "Bác An nhờ mình chụp lại cành đào phai chớm nở trước hiên nhà. Mình phải lấy máy ảnh [Phím Space] ngắm chụp để lưu lại trang bìa Chương 1 này mới được...";
+                }
+
+            case 1:
+                bool hasWrapped = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
+                                  (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.HasCompletedAny);
+                if (hasWrapped)
+                {
+                    int count = GameManager.Instance != null ? GameManager.Instance.BanhChungCount : 1;
+                    return "Hà Nội, đêm 29 Tết bên bếp lửa hồng.\n" +
+                           "Manh chiếu cói trải bên thềm, thoang thoảng mùi lá dong xanh, gạo nếp cái hoa vàng và thịt mỡ ướp tiêu thơm nồng.\n" +
+                           $"Tự tay kéo từng lớp lá dong, rải nếp, đặt thịt rồi gói vuông vức... Chiếc bánh chưng đầu tiên đã hoàn thành và nằm gọn trong túi đồ kỷ niệm (hiện có: {count} chiếc), sẵn sàng cho nồi luộc bốc khói rực ánh lửa hồng đêm nay!";
                 }
                 else
                 {
                     return "Hà Nội, ngày 29 Tết.\n" +
-                           "Bác An nhờ mình chụp lại cành đào phai chớm nở trước hiên nhà. Mình phải lấy máy ảnh [Phím Space] chụp lại để lưu vào cuốn sổ này mới được...";
+                           "Bên hiên nhà, Bác An đã chuẩn bị sẵn lá dong xanh mướt, thúng gạo nếp cái hoa vàng và thịt mỡ ướp tiêu đậm đà.\n" +
+                           "Bác bảo: 'Tết này cháu hãy tự tay gói thử một chiếc bánh chưng vuông vức xem sao nhé!'. Mình nhất định sẽ lại manh chiếu bên hiên nhà [Phím E hoặc B] trổ tài ngay...";
                 }
 
-            case 1:
-                return "Lối Đi Công Viên Mùa Thu.\n" +
-                       "Những viên sỏi ấm trải dài dưới tán lá vàng ươm. Mỗi bước chân tản bộ ở đây đều khiến tâm hồn nhẹ bẫng như một làn mây trôi.";
-
             case 2:
-                return "Góc Kỷ Niệm Tự Do.\n" +
-                       "Bất kỳ góc nhỏ bình yên nào ta vô tình bắt gặp trên hành trình đều xứng đáng có một trang riêng trong cuốn sổ ký ức này.";
+                return "Công Viên Mùa Thu & Khoảnh Khắc Bình Yên.\n" +
+                       "Những viên sỏi ấm trải dài dưới tán lá vàng ươm. Mỗi bước chân tản bộ ở đây đều khiến tâm hồn nhẹ bẫng như một làn mây trôi giữa tiết trời đầu xuân.";
 
             default:
                 return "";
@@ -353,26 +391,43 @@ public class AlbumUIController : MonoBehaviour
         switch (currentPageIndex)
         {
             case 0:
-                bool completed = GameManager.Instance != null && GameManager.Instance.CurrentQuestState >= QuestState.PhotoTaken;
+                bool completed = (GameManager.Instance != null && GameManager.Instance.CurrentQuestState >= QuestState.PhotoTaken) ||
+                                 (ViewfinderController.Instance != null && ViewfinderController.Instance.LatestCapturedPhoto != null);
                 return "// Arthur's Heart.log()\n" +
                        "Memory peachBlossom = new Memory();\n" +
-                       "peachBlossom.Subject = \"Cành Đào Phai\";\n" +
+                       "peachBlossom.Title = \"Cành đào đầu tiên của bác An\";\n" +
+                       "peachBlossom.Date = \"Ngày 29 Tết Giáp Thìn\";\n" +
                        "peachBlossom.Location = \"Hiên nhà Bác An\";\n" +
-                       "peachBlossom.Date = \"29 Tết Ấm Áp\";\n" +
                        $"peachBlossom.Captured = {completed.ToString().ToLower()};\n" +
                        "Heart.Save(peachBlossom);";
 
             case 1:
+                bool hasWrapped = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
+                                  (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.HasCompletedAny);
+                if (hasWrapped)
+                {
+                    return "// Recipe.Craft()\n" +
+                           "BanhChung myBanh = new BanhChung();\n" +
+                           "myBanh.Ingredients = [ DongLeaf, StickyRice, Pork ];\n" +
+                           "myBanh.FoldTight();\n" +
+                           "myBanh.TieCrossLats();\n" +
+                           "Inventory.Add(myBanh); // 1x Bánh Chưng Tết\n" +
+                           "Soul.State = PureWarmth;";
+                }
+                else
+                {
+                    return "// Quest.Pending()\n" +
+                           "if (Arthur.WalkTo(BanhChungMat)) {\n" +
+                           "    Arthur.DragAndDropLayers();\n" +
+                           "    Inventory.Add(BanhChung);\n" +
+                           "}";
+                }
+
+            case 2:
                 return "// Environment.Trace()\n" +
                        "ScenicPark park = World.GetCozyPlace();\n" +
                        "park.BreatheAir();\n" +
                        "Soul.State = CalmLevitate;";
-
-            case 2:
-                return "// FreeLens.Capture()\n" +
-                       "Texture2D instantMoment = Camera.Snap();\n" +
-                       "Album.AddKeepsake(instantMoment);\n" +
-                       "return true;";
 
             default:
                 return "";
@@ -463,7 +518,9 @@ public class AlbumUIController : MonoBehaviour
     {
         // Tiêu đề trang trái
         GUI.color = new Color(0.4f, 0.32f, 0.25f, openAnimProgress);
-        GUI.Label(new Rect(pageRect.x, pageRect.y, pageRect.width, 24 * scale), "KHOẢNH KHẮC LƯU GIỮ", bookTitleStyle);
+        string leftPageTitle = (currentPageIndex == 0) ? "CHƯƠNG 1: TẾT ẤM ÁP NƠI PHỐ CỔ" :
+                               (currentPageIndex == 1) ? "KỶ NIỆM: GÓI BÁNH CHƯNG TẾT" : "KHOẢNH KHẮC LƯU GIỮ";
+        GUI.Label(new Rect(pageRect.x, pageRect.y, pageRect.width, 24 * scale), leftPageTitle, bookTitleStyle);
 
         // KHUNG ẢNH POLAROID
         float cardW = pageRect.width * 0.88f;
@@ -481,7 +538,7 @@ public class AlbumUIController : MonoBehaviour
         DrawFrameBorders(cardRect, 1.2f);
 
         // Băng dính Washi Tape trang trí góc trên tấm ảnh
-        GUI.color = new Color(0.82f, 0.62f, 0.55f, 0.85f * openAnimProgress);
+        GUI.color = (currentPageIndex == 1) ? new Color(0.35f, 0.65f, 0.40f, 0.85f * openAnimProgress) : new Color(0.82f, 0.62f, 0.55f, 0.85f * openAnimProgress);
         GUI.DrawTexture(new Rect(cardRect.x + 12, cardRect.y - 8, 45 * scale, 16 * scale), whitePixel);
         GUI.DrawTexture(new Rect(cardRect.xMax - 55 * scale, cardRect.y - 8, 45 * scale, 16 * scale), whitePixel);
 
@@ -501,12 +558,12 @@ public class AlbumUIController : MonoBehaviour
             GUI.color = new Color(0.7f, 0.65f, 0.55f, openAnimProgress);
             DrawFrameBorders(photoRect, 1f);
 
-            // DÒNG GHI CHÚ VIẾT TAY DƯỚI ẢNH (Ví dụ: "Hà Nội ngày 29 Tết - Cành đào đầu tiên")
+            // DÒNG GHI CHÚ VIẾT TAY DƯỚI ẢNH (Ví dụ: "Ngày 29 Tết - Cành đào đầu tiên của bác An")
             GUI.color = new Color(0.28f, 0.24f, 0.2f, openAnimProgress);
             Rect captionRect = new Rect(cardRect.x + 8, photoRect.yMax + 6, cardRect.width - 16, cardRect.yMax - photoRect.yMax - 10);
             string photoCaption = (currentPageIndex == 0)
-                ? "Hà Nội ngày 29 Tết - Cành đào đầu tiên"
-                : (currentPageIndex == 1) ? "Công viên mùa thu rực rỡ" : "Góc kỷ niệm ấm áp";
+                ? "Ngày 29 Tết - Cành đào đầu tiên của bác An"
+                : (currentPageIndex == 1) ? "Ngày 29 Tết - Chiếc Bánh Chưng đầu tiên của Arthur" : "Công viên mùa thu rực rỡ";
             GUI.Label(captionRect, photoCaption, polaroidLabelStyle);
         }
         else
@@ -520,7 +577,9 @@ public class AlbumUIController : MonoBehaviour
             GUI.color = new Color(0.55f, 0.48f, 0.4f, openAnimProgress);
             GUIStyle emptyHintStyle = new GUIStyle(polaroidLabelStyle) { fontSize = Mathf.RoundToInt(12 * scale) };
             string hint = (currentPageIndex == 0)
-                ? "📷 [Chưa có ảnh]\nHãy nhận việc từ Bác An và\nbấm [Space] chụp cành đào phai!"
+                ? "📷 [Chưa có ảnh]\nHãy mở máy ảnh [Space] chụp cành đào phai\nđể ghim trang trọng vào trang bìa này!"
+                : (currentPageIndex == 1)
+                ? "🎋 [Mẩu Kỷ Niệm Đang Chờ]\nHãy đến manh chiếu bên cạnh Bác An\nbấm [E] hoặc [B] để tự tay gói bánh chưng!"
                 : "📷 [Chưa có ảnh]\nHãy mở máy ảnh ghi lại khoảnh khắc!";
             GUI.Label(photoRect, hint, emptyHintStyle);
         }
@@ -533,8 +592,8 @@ public class AlbumUIController : MonoBehaviour
     {
         // 1. Tiêu đề nhật ký & Ngày tháng
         GUI.color = new Color(0.35f, 0.28f, 0.22f, openAnimProgress);
-        string headerTitle = (currentPageIndex == 0) ? "KÝ ỨC #01: CÀNH ĐÀO ĐẦU TIÊN" :
-                             (currentPageIndex == 1) ? "KÝ ỨC #02: LỐI ĐI MÙA THU" : "KÝ ỨC #03: KHOẢNH KHẮC TỰ DO";
+        string headerTitle = (currentPageIndex == 0) ? "KÝ ỨC #01: CÀNH ĐÀO ĐẦU TIÊN CỦA BÁC AN" :
+                             (currentPageIndex == 1) ? "KÝ ỨC #02: NỒI BÁNH CHƯNG ĐÊM 29 TẾT" : "KÝ ỨC #03: KHOẢNH KHẮC TỰ DO";
         GUI.Label(new Rect(pageRect.x, pageRect.y, pageRect.width, 24 * scale), headerTitle, diaryHeaderStyle);
 
         // Đường kẻ gạch chân trang trí
@@ -633,6 +692,70 @@ public class AlbumUIController : MonoBehaviour
         }
         paperTex.SetPixels(paperColors);
         paperTex.Apply();
+
+        // Tạo minh hoạ ảnh chụp chiếc Bánh Chưng xanh thu hoạch được
+        banhChungIllustrationTex = GenerateBanhChungKeepsakeTexture();
+    }
+
+    private Texture2D GenerateBanhChungKeepsakeTexture()
+    {
+        int size = 128;
+        Texture2D tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        Color[] cols = new Color[size * size];
+
+        Color woodBg = new Color(0.85f, 0.76f, 0.62f, 1f);
+        Color shadow = new Color(0.35f, 0.28f, 0.22f, 0.5f);
+        Color leafBase = new Color(0.22f, 0.55f, 0.25f, 1f);
+        Color leafDark = new Color(0.16f, 0.44f, 0.19f, 1f);
+        Color latGiang = new Color(0.96f, 0.88f, 0.52f, 1f);
+        Color redPaper = new Color(0.85f, 0.22f, 0.18f, 1f);
+        Color goldDot = new Color(0.98f, 0.85f, 0.35f, 1f);
+
+        int minB = 22;
+        int maxB = 106;
+
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                int idx = y * size + x;
+                cols[idx] = ((x + y) % 6 == 0) ? new Color(0.80f, 0.72f, 0.58f, 1f) : woodBg;
+
+                // Bóng đổ
+                if (x >= minB + 6 && x <= maxB + 6 && y >= minB - 6 && y <= maxB - 6)
+                {
+                    cols[idx] = Color.Lerp(cols[idx], shadow, 0.5f);
+                }
+
+                // Chiếc bánh chưng vuông
+                if (x >= minB && x <= maxB && y >= minB && y <= maxB)
+                {
+                    bool isBorder = (x == minB || x == maxB || y == minB || y == maxB);
+                    bool isFold = (x - minB == y - minB) || (x - minB == maxB - y);
+                    cols[idx] = (isBorder || isFold) ? leafDark : leafBase;
+
+                    bool isVerticalLat = (x >= 46 && x <= 50) || (x >= 78 && x <= 82);
+                    bool isHorizontalLat = (y >= 46 && y <= 50) || (y >= 78 && y <= 82);
+                    if (isVerticalLat || isHorizontalLat)
+                    {
+                        cols[idx] = latGiang;
+                    }
+
+                    if (x >= 54 && x <= 74 && y >= 54 && y <= 74)
+                    {
+                        cols[idx] = redPaper;
+                        if (x >= 62 && x <= 66 && y >= 62 && y <= 66)
+                        {
+                            cols[idx] = goldDot;
+                        }
+                    }
+                }
+            }
+        }
+
+        tex.SetPixels(cols);
+        tex.Apply();
+        return tex;
     }
 
     private void InitStyles()

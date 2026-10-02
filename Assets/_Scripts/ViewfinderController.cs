@@ -120,9 +120,18 @@ public class ViewfinderController : MonoBehaviour
     private bool stylesInitialized = false;
     #endregion
 
+    public static ViewfinderController Instance { get; private set; }
+
     #region Unity Lifecycle
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+
         // 1. Tự động tìm PlayerController
         if (player == null)
         {
@@ -399,8 +408,10 @@ public class ViewfinderController : MonoBehaviour
             GUI.color = oldColor;
         }
 
-        // 3. Vẽ Tấm ảnh nhỏ Polaroid ở góc màn hình
-        if (showCornerThumbnail && latestCapturedPhoto != null && !isCapturing)
+        // 3. Vẽ Tấm ảnh nhỏ Polaroid ở góc màn hình (ẩn đi khi đang mở Cuốn Album hoặc Minigame)
+        bool isAlbumOpen = AlbumUIController.Instance != null && AlbumUIController.Instance.IsOpen;
+        bool isMinigameOpen = BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen;
+        if (showCornerThumbnail && latestCapturedPhoto != null && !isCapturing && !isAlbumOpen && !isMinigameOpen)
         {
             DrawPolaroidThumbnail();
         }

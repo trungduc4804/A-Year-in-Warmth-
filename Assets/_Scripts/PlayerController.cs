@@ -596,7 +596,7 @@ public class PlayerController : MonoBehaviour
         if (!showDebugHUD || !Application.isPlaying) return;
 
         // Bảng giao diện HUD tiện lợi để theo dõi cảm giác di chuyển khi Play Mode
-        GUILayout.BeginArea(new Rect(18, 18, 330, 305), GUI.skin.box);
+        GUILayout.BeginArea(new Rect(18, 18, 330, 330), GUI.skin.box);
         
         GUIStyle headerStyle = new GUIStyle(GUI.skin.label)
         {
@@ -619,6 +619,18 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label($"• Vận tốc hiện tại: {currentVelocity.magnitude:F2} units/s");
         GUILayout.Label($"• Hướng 8 hướng: {current8WayDirection}");
         GUILayout.Label($"• Chế độ xoay: {facingMode}");
+
+        int bagBanhChung = GameManager.Instance != null ? GameManager.Instance.BanhChungCount : 0;
+        if (bagBanhChung > 0)
+        {
+            GUIStyle bagStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 12,
+                fontStyle = FontStyle.Bold,
+                normal = { textColor = new Color(0.45f, 0.95f, 0.65f) }
+            };
+            GUILayout.Label($"• 🎒 Túi Kỷ Niệm: 🍱 {bagBanhChung}x Bánh Chưng Tết", bagStyle);
+        }
         
         GUILayout.Space(6);
         GUILayout.Label("💡 [WASD / Phím mũi tên]: Di chuyển 8 hướng");

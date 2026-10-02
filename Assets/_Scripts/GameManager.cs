@@ -149,15 +149,41 @@ public class GameManager : MonoBehaviour
         Debug.Log($"[GameManager] 🚩 Trạng thái nhiệm vụ chuyển sang: {newState}");
     }
 
+    [Header("=== TÚI ĐỒ KỶ NIỆM (INVENTORY) ===")]
+    [Tooltip("Số lượng Bánh Chưng Tết Arthur đã tự tay gói và thu hoạch được.")]
+    public int banhChungCount = 0;
+
+    [Tooltip("Đã mở khóa mẩu ghi chú kỷ niệm gói bánh chưng trong Cuốn Album.")]
+    public bool hasBanhChungKeepsake = false;
+
+    public int BanhChungCount => banhChungCount;
+    public bool HasBanhChungKeepsake => hasBanhChungKeepsake;
+
+    /// <summary>
+    /// Thu hoạch phần thưởng: Nhận 1 chiếc Bánh Chưng hoàn chỉnh vào túi đồ
+    /// </summary>
+    public void AddBanhChungReward()
+    {
+        banhChungCount++;
+        hasBanhChungKeepsake = true;
+        ShowToast($"🍱 [THU HOẠCH]: +1 Chiếc Bánh Chưng Tết! (Túi đồ: {banhChungCount} chiếc) ✓");
+        PlayQuestSound();
+
+        if (AlbumUIController.Instance != null)
+        {
+            AlbumUIController.Instance.RefreshAlbumData();
+        }
+    }
+
     /// <summary>
     /// Được gọi mỗi khi máy ảnh Viewfinder bấm chụp, kiểm tra xem mục tiêu có nằm trong khung ngắm không
     /// </summary>
     public void OnPhotoSnapped(Camera cam, Rect viewfinderRect, Vector2 playerPosition, Texture2D snappedPhoto)
     {
-        // Chỉ xử lý nếu người chơi đang ở Trạng thái 1 (Đã nhận việc và đang cần chụp ảnh)
-        if (currentQuestState != QuestState.QuestAccepted) return;
+        // Luôn gán ảnh chụp mới nhất vào questPhoto để ghim ngay vào bìa Album Chương 1
+        questPhoto = snappedPhoto;
 
-        // Tìm tất cả PhotoTarget trong Scene
+        // Tìm tất cả PhotoTarget trong Scene để kiểm tra nhiệm vụ
         PhotoTarget[] targets = FindObjectsByType<PhotoTarget>(FindObjectsSortMode.None);
         foreach (PhotoTarget target in targets)
         {
@@ -166,20 +192,20 @@ public class GameManager : MonoBehaviour
                 // Kiểm tra xem đối tượng có nằm trọn trong khung ngắm không
                 if (target.IsInViewfinder(cam, viewfinderRect, playerPosition))
                 {
-                    // LƯU ẢNH TẠM VÀO BỘ NHỚ
-                    questPhoto = snappedPhoto;
-
-                    // Chuyển sang Trạng thái 2: Đã chụp đúng bức ảnh yêu cầu
-                    SetQuestState(QuestState.PhotoTaken);
-
-                    // Nạp ngay ảnh vừa chụp vào trang Album Kỷ Niệm
-                    if (AlbumUIController.Instance != null)
+                    // Nếu đang ở Trạng thái 1, chuyển sang Trạng thái 2
+                    if (currentQuestState == QuestState.QuestAccepted)
                     {
-                        AlbumUIController.Instance.RefreshAlbumData();
+                        SetQuestState(QuestState.PhotoTaken);
                     }
-                    return;
+                    break;
                 }
             }
+        }
+
+        // Nạp ngay ảnh vừa chụp vào trang Album Kỷ Niệm
+        if (AlbumUIController.Instance != null)
+        {
+            AlbumUIController.Instance.RefreshAlbumData();
         }
     }
 

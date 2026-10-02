@@ -311,10 +311,10 @@ public class BanhChungMinigame : MonoBehaviour
         PlayClip(fanfareSound, 1.0f);
         ShowFeedback("🎉 Bánh Chưng đã tự gập lá và buộc lạt vuông vắn! Một chiếc bánh Tết ấm áp trọn vẹn!");
 
-        // Thông báo ra GameManager
+        // THU HOẠCH PHẦN THƯỞNG HỮU HÌNH VÀO TÚI ĐỒ VÀ MỞ KHÓA KỶ NIỆM ALBUM
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.ShowToast("✨ Bác An khen: 'Cháu khéo tay quá, chiếc bánh chưng gói vuông vức và chặt tay lắm!'");
+            GameManager.Instance.AddBanhChungReward();
         }
     }
 
@@ -405,11 +405,7 @@ public class BanhChungMinigame : MonoBehaviour
 
         if (currentStage == LayerStage.Wrapped)
         {
-            Rect resetBtn = new Rect(matRect.x + 16, matRect.y + 12, 140, 28);
-            if (GUI.Button(resetBtn, "✨ Gói Thêm Chiếc Nữa"))
-            {
-                ResetMold();
-            }
+            DrawHarvestRewardModal(matRect);
         }
 
         // 8. VẼ NGUYÊN LIỆU ĐANG ĐƯỢC KÉO THEO CHUỘT (DRAGGING ITEM)
@@ -663,6 +659,72 @@ public class BanhChungMinigame : MonoBehaviour
 
             GUI.color = new Color(1f, 0.95f, 0.45f, 0.9f);
             DrawRect(spRect);
+        }
+    }
+
+    /// <summary>
+    /// Bảng thông báo nhận phần thưởng hữu hình và mở khóa trang kỷ niệm Cuốn Album
+    /// </summary>
+    private void DrawHarvestRewardModal(Rect matRect)
+    {
+        float modalW = Mathf.Min(matRect.width * 0.85f, 560f);
+        float modalH = 140f;
+        Rect modalRect = new Rect(matRect.center.x - modalW * 0.5f, matRect.yMax - modalH - 52f, modalW, modalH);
+
+        // Bóng đổ
+        GUI.color = new Color(0f, 0f, 0f, 0.45f);
+        GUI.DrawTexture(new Rect(modalRect.x + 4, modalRect.y + 4, modalRect.width, modalRect.height), darkPixel);
+
+        // Nền tối sang trọng
+        GUI.color = new Color(0.12f, 0.14f, 0.18f, 0.96f);
+        GUI.DrawTexture(modalRect, darkPixel);
+
+        // Viền vàng kim lễ hội
+        GUI.color = new Color(0.95f, 0.82f, 0.42f, 1f);
+        DrawFrameBorders(modalRect, 2f);
+
+        // Tiêu đề nhận thưởng
+        GUI.color = new Color(1f, 0.90f, 0.55f, 1f);
+        Rect titleR = new Rect(modalRect.x, modalRect.y + 10, modalRect.width, 24);
+        GUI.Label(titleR, "🎋 THU HOẠCH PHẦN THƯỞNG HỮU HÌNH 🎋", titleStyle);
+
+        // Nội dung chi tiết
+        int count = GameManager.Instance != null ? GameManager.Instance.BanhChungCount : 1;
+        string detailText = $"🍱 Bạn nhận được: +1 Chiếc Bánh Chưng Xanh Tết (Đã cất vào Túi Kỷ Niệm • Tổng: {count} chiếc)\n" +
+                            "📖 Đã mở khóa Trang Kỷ Niệm Bánh Chưng mới trong Cuốn Album của Arthur!";
+        GUI.color = Color.white;
+        Rect detailR = new Rect(modalRect.x + 16, titleR.yMax + 4, modalRect.width - 32, 42);
+        GUI.Label(detailR, detailText, feedbackStyle);
+
+        // 3 nút thao tác
+        float btnW = (modalRect.width - 32f - 20f) / 3f;
+        float btnH = 32f;
+        float btnY = modalRect.yMax - btnH - 12f;
+
+        // Nút 1: Mở Cuốn Album ngay
+        Rect albumBtn = new Rect(modalRect.x + 16, btnY, btnW, btnH);
+        if (GUI.Button(albumBtn, "📖 Mở Album (Tab)"))
+        {
+            CloseMinigame();
+            if (AlbumUIController.Instance != null)
+            {
+                AlbumUIController.Instance.OpenAlbum();
+                AlbumUIController.Instance.GoToPage(1);
+            }
+        }
+
+        // Nút 2: Gói thêm chiếc nữa
+        Rect wrapAgainBtn = new Rect(albumBtn.xMax + 10, btnY, btnW, btnH);
+        if (GUI.Button(wrapAgainBtn, "✨ Gói Thêm Nữa"))
+        {
+            ResetMold();
+        }
+
+        // Nút 3: Cất vào túi & Dạo cảnh
+        Rect continueBtn = new Rect(wrapAgainBtn.xMax + 10, btnY, btnW, btnH);
+        if (GUI.Button(continueBtn, "✕ Cất Vào Túi"))
+        {
+            CloseMinigame();
         }
     }
 
