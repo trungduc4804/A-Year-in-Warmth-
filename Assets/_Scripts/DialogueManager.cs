@@ -32,8 +32,8 @@ public class DialogueManager : MonoBehaviour
     public AudioClip customTypeSound;
 
     [Header("=== NPC MẪU (DEMO NPC SPAWNER) ===")]
-    [Tooltip("Tự động sinh một khối vuông NPC mẫu gần người chơi để kiểm tra ngay nếu scene chưa có.")]
-    public bool autoSpawnDemoNPC = true;
+    [Tooltip("Tự động sinh một khối vuông NPC mẫu (đã được GameManager thay thế bằng Bác An).")]
+    public bool autoSpawnDemoNPC = false;
 
     [Tooltip("Màu sắc của khối vuông NPC đại diện.")]
     public Color defaultNpcColor = new Color(0.88f, 0.48f, 0.28f, 1f); // Màu đất nung ấm áp
@@ -142,10 +142,12 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region Dialogue Flow
+    private Action onDialogueCompleteCallback;
+
     /// <summary>
-    /// Bắt đầu một đoạn hội thoại với NPC
+    /// Bắt đầu một đoạn hội thoại với NPC, có thể truyền callback khi kết thúc hội thoại
     /// </summary>
-    public void StartDialogue(string speakerName, string[] lines)
+    public void StartDialogue(string speakerName, string[] lines, Action onComplete = null)
     {
         if (lines == null || lines.Length == 0) return;
 
@@ -156,6 +158,7 @@ public class DialogueManager : MonoBehaviour
         dialogueLines = lines;
         currentLineIndex = 0;
         boxAnimProgress = 0f;
+        onDialogueCompleteCallback = onComplete;
 
         // Khóa di chuyển nhân vật khi trò chuyện
         if (player != null)
@@ -253,6 +256,8 @@ public class DialogueManager : MonoBehaviour
         }
 
         OnDialogueEnded?.Invoke();
+        onDialogueCompleteCallback?.Invoke();
+        onDialogueCompleteCallback = null;
         Debug.Log("[DialogueManager] Đã kết thúc cuộc trò chuyện.");
     }
 

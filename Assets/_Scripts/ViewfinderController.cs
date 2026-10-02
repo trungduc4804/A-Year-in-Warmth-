@@ -352,6 +352,12 @@ public class ViewfinderController : MonoBehaviour
         latestCapturedPhoto = croppedPhoto;
         photoGallery.Add(croppedPhoto);
 
+        // 4b. Kiểm tra xem mục tiêu nhiệm vụ (Cây Đào Phai) có nằm trong khung ngắm không
+        if (GameManager.Instance != null && player != null)
+        {
+            GameManager.Instance.OnPhotoSnapped(targetCamera, viewRect, player.transform.position, croppedPhoto);
+        }
+
         // 5. Kích hoạt hiệu ứng Flash, âm thanh màn trập và hoạt ảnh ảnh góc
         flashAlpha = 1.0f;
         thumbnailAnimTimer = 0f;

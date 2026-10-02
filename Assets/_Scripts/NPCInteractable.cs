@@ -11,10 +11,16 @@ public class NPCInteractable : MonoBehaviour
 {
     #region Serialized Fields
     [Header("=== THÔNG TIN NPC (NPC INFO) ===")]
-    [Tooltip("Tên của NPC hiển thị trên hộp thoại.")]
-    public string npcName = "Bác Rowan (Làm Vườn)";
+    [Tooltip("Mã định danh của NPC (ví dụ: BacAn để liên kết nhiệm vụ cành đào phai).")]
+    public string npcId = "BacAn";
 
-    [Tooltip("Danh sách các câu thoại NPC sẽ nói theo thứ tự.")]
+    [Tooltip("Tên của NPC hiển thị trên hộp thoại.")]
+    public string npcName = "Bác An (Chủ Nhà)";
+
+    [Tooltip("Tự động liên kết lời thoại theo trạng thái nhiệm vụ (QuestState 0, 1, 2, 3).")]
+    public bool useQuestDialogue = true;
+
+    [Tooltip("Danh sách các câu thoại mặc định nếu không dùng hệ thống nhiệm vụ.")]
     [TextArea(2, 5)]
     public string[] dialogueLines = new string[]
     {
@@ -123,6 +129,63 @@ public class NPCInteractable : MonoBehaviour
             bounceTimer = 0.25f;
         }
 
+        // 1. Phân nhánh lời thoại theo trạng thái nhiệm vụ của Bác An
+        if (useQuestDialogue && npcId == "BacAn" && GameManager.Instance != null)
+        {
+            QuestState state = GameManager.Instance.CurrentQuestState;
+            string speaker = "Bác An (Chủ Nhà)";
+
+            switch (state)
+            {
+                case QuestState.NotStarted:
+                    string[] state0Lines = new string[]
+                    {
+                        "Chào cháu Arthur! Tiết trời hôm nay thật dễ chịu, cháu đang dạo chơi ngắm cảnh đấy à?",
+                        "Trước hiên nhà bác có cành đào phai vừa chớm nở đẹp lắm. Bác thì già rồi, chân yếu mắt mờ chẳng ngắm rõ được từng cánh hoa trong gió.",
+                        "Bác thấy cháu có chiếc máy ảnh đó, cháu chụp giúp bác một bức ảnh cành đào phai trước hiên nhà được không?"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state0Lines, () =>
+                    {
+                        // Chuyển sang Trạng thái 1: Đã nhận việc từ Bác An
+                        GameManager.Instance.SetQuestState(QuestState.QuestAccepted);
+                    });
+                    return;
+
+                case QuestState.QuestAccepted:
+                    string[] state1Lines = new string[]
+                    {
+                        "Cành đào phai cánh hồng thắm ở ngay trước hiên nhà phía đông bắc đấy cháu Arthur.",
+                        "Cháu hãy bấm phím [Space] để mở ống kính máy ảnh, căn góc cây đào vào giữa khung rồi bấm chuột trái để chụp nhé!"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state1Lines);
+                    return;
+
+                case QuestState.PhotoTaken:
+                    string[] state2Lines = new string[]
+                    {
+                        "A, Arthur! Cháu đã chụp được cành đào phai rồi đấy ư? Mau cho bác xem bức ảnh nào...",
+                        "(Bác An nâng niu ngắm nhìn bức ảnh cành đào phai vừa chụp)",
+                        "Ôi, bức ảnh cành đào phai đẹp và ấm áp quá! Từng cánh hoa phai rung rinh trong ánh nắng sớm mai... Bác cảm ơn cháu Arthur nhiều nhé!"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state2Lines, () =>
+                    {
+                        // Chuyển sang Trạng thái 3: Hoàn thành nhiệm vụ
+                        GameManager.Instance.SetQuestState(QuestState.Completed);
+                    });
+                    return;
+
+                case QuestState.Completed:
+                    string[] state3Lines = new string[]
+                    {
+                        "Cảm ơn cháu lần nữa nhé Arthur. Nhờ bức ảnh của cháu mà mùa xuân này trong căn nhà nhỏ của bác ấm áp hơn hẳn.",
+                        "Chúc cháu một ngày dạo bước ngắm cảnh thật an lành và chụp được thêm nhiều khoảnh khắc đẹp nhé!"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state3Lines);
+                    return;
+            }
+        }
+
+        // 2. Mặc định nếu không thuộc chuỗi nhiệm vụ Bác An
         DialogueManager.Instance.StartDialogue(npcName, dialogueLines);
     }
     #endregion

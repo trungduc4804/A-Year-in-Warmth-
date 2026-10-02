@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: e246fdddab589d5429eec5efe94cdb69
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1237942242005341644
+    second: An_elderly_62_year_o...-44332100-0_0
+  - first:
+      213: 2980614027051265396
+    second: An_elderly_62_year_o...-44332100-0_1
+  - first:
+      213: 812585744516039270
+    second: An_elderly_62_year_o...-44332100-0_2
+  - first:
+      213: -3967186662219944989
+    second: An_elderly_62_year_o...-44332100-0_3
+  - first:
+      213: 1005100376158391640
+    second: An_elderly_62_year_o...-44332100-0_4
+  - first:
+      213: 8372687751605609811
+    second: An_elderly_62_year_o...-44332100-0_5
+  - first:
+      213: -5381509822306673277
+    second: An_elderly_62_year_o...-44332100-0_6
+  - first:
+      213: 4705084633136184652
+    second: An_elderly_62_year_o...-44332100-0_7
+  - first:
+      213: 4037022507690417898
+    second: An_elderly_62_year_o...-44332100-0_8
+  - first:
+      213: -8723511861506982902
+    second: An_elderly_62_year_o...-44332100-0_9
+  - first:
+      213: -3066591866631566788
+    second: An_elderly_62_year_o...-44332100-0_10
+  - first:
+      213: -7907585331352976864
+    second: An_elderly_62_year_o...-44332100-0_11
+  - first:
+      213: 6704215097113841040
+    second: An_elderly_62_year_o...-44332100-0_12
+  - first:
+      213: -7191352331188806230
+    second: An_elderly_62_year_o...-44332100-0_13
+  - first:
+      213: -7433339648744291346
+    second: An_elderly_62_year_o...-44332100-0_14
+  - first:
+      213: 3006454496141745198
+    second: An_elderly_62_year_o...-44332100-0_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_0
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 595
+        width: 78
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43a22dcf612f1dee0800000000000000
+      internalID: -1237942242005341644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_1
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 591
+        width: 70
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47defe66aa44d5920800000000000000
+      internalID: 2980614027051265396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_2
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 595
+        width: 78
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 662cc6bed62e64b00800000000000000
+      internalID: 812585744516039270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_3
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 591
+        width: 70
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eb66b0ffb8b1f8c0800000000000000
+      internalID: -3967186662219944989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_4
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 403
+        width: 58
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85d48848775d2fd00800000000000000
+      internalID: 1005100376158391640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_5
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 403
+        width: 70
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35567b15623c13470800000000000000
+      internalID: 8372687751605609811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_6
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 403
+        width: 58
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38d922e34590155b0800000000000000
+      internalID: -5381509822306673277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_7
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 403
+        width: 74
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4d3b349b81db4140800000000000000
+      internalID: 4705084633136184652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_8
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 211
+        width: 78
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeed429e492660830800000000000000
+      internalID: 4037022507690417898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_9
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 207
+        width: 70
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0c38fc5e2cdfe680800000000000000
+      internalID: -8723511861506982902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_10
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 211
+        width: 78
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3ac25ed1f64175d0800000000000000
+      internalID: -3066591866631566788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_11
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 207
+        width: 70
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 022cd9d890d924290800000000000000
+      internalID: -7907585331352976864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_12
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 19
+        width: 58
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09d08414c182a0d50800000000000000
+      internalID: 6704215097113841040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_13
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 19
+        width: 70
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aad50dcf72f233c90800000000000000
+      internalID: -7191352331188806230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_14
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 19
+        width: 58
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee305c519f877d890800000000000000
+      internalID: -7433339648744291346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: An_elderly_62_year_o...-44332100-0_15
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 19
+        width: 74
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2c97e37f6219b920800000000000000
+      internalID: 3006454496141745198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      An_elderly_62_year_o...-44332100-0_0: -1237942242005341644
+      An_elderly_62_year_o...-44332100-0_1: 2980614027051265396
+      An_elderly_62_year_o...-44332100-0_10: -3066591866631566788
+      An_elderly_62_year_o...-44332100-0_11: -7907585331352976864
+      An_elderly_62_year_o...-44332100-0_12: 6704215097113841040
+      An_elderly_62_year_o...-44332100-0_13: -7191352331188806230
+      An_elderly_62_year_o...-44332100-0_14: -7433339648744291346
+      An_elderly_62_year_o...-44332100-0_15: 3006454496141745198
+      An_elderly_62_year_o...-44332100-0_2: 812585744516039270
+      An_elderly_62_year_o...-44332100-0_3: -3967186662219944989
+      An_elderly_62_year_o...-44332100-0_4: 1005100376158391640
+      An_elderly_62_year_o...-44332100-0_5: 8372687751605609811
+      An_elderly_62_year_o...-44332100-0_6: -5381509822306673277
+      An_elderly_62_year_o...-44332100-0_7: 4705084633136184652
+      An_elderly_62_year_o...-44332100-0_8: 4037022507690417898
+      An_elderly_62_year_o...-44332100-0_9: -8723511861506982902
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

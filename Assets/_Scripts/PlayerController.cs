@@ -236,6 +236,12 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.AddComponent<DialogueManager>();
         }
+
+        // 7. Tự động gắn GameManager (Hệ thống Trạng thái Game & Quản lý Nhiệm vụ) nếu chưa có
+        if (FindAnyObjectByType<GameManager>() == null)
+        {
+            gameObject.AddComponent<GameManager>();
+        }
     }
 
     private void Update()
