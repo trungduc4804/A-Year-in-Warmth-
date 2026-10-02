@@ -230,6 +230,12 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.AddComponent<ViewfinderController>();
         }
+
+        // 6. Tự động gắn DialogueManager (Hệ thống hộp thoại tương tác NPC) nếu chưa có
+        if (FindAnyObjectByType<DialogueManager>() == null)
+        {
+            gameObject.AddComponent<DialogueManager>();
+        }
     }
 
     private void Update()
@@ -555,7 +561,7 @@ public class PlayerController : MonoBehaviour
         if (!showDebugHUD || !Application.isPlaying) return;
 
         // Bảng giao diện HUD tiện lợi để theo dõi cảm giác di chuyển khi Play Mode
-        GUILayout.BeginArea(new Rect(18, 18, 330, 245), GUI.skin.box);
+        GUILayout.BeginArea(new Rect(18, 18, 330, 265), GUI.skin.box);
         
         GUIStyle headerStyle = new GUIStyle(GUI.skin.label)
         {
@@ -567,7 +573,8 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("🌿 A Year in Warmth - Character Controller", headerStyle);
         GUILayout.Space(4);
 
-        string paceState = isInputLocked ? "Đang ngắm máy ảnh (Viewfinder Mode)" :
+        string paceState = (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive) ? "Đang trò chuyện cùng NPC" :
+                           isInputLocked ? "Đang ngắm máy ảnh (Viewfinder Mode)" :
                            !isMoving ? "Đang dừng chân ngắm cảnh (Idle)" :
                            isJogging ? "Rảo bước nhanh (Jogging)" : "Đi bộ thư thả (Scenic Walk)";
 
@@ -581,6 +588,7 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label($"💡 [{jogKey}]: Giữ để rảo bước nhanh ({jogSpeed:F1} u/s)");
         GUILayout.Label("💡 Thả phím: Nhân vật dừng lại ngay lập tức");
         GUILayout.Label("📸 [Phím cách Space]: Mở/Đóng khung ngắm chụp ảnh");
+        GUILayout.Label("💬 [E]: Tương tác trò chuyện khi lại gần NPC");
 
         GUILayout.EndArea();
     }

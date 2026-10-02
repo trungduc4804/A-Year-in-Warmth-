@@ -194,6 +194,9 @@ public class ViewfinderController : MonoBehaviour
     #region Input & Viewfinder Mode Controls
     private void HandleHotkeys()
     {
+        // Không mở hoặc thao tác máy ảnh khi đang trong đoạn hội thoại với NPC
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive) return;
+
         // 1. Phím Space: Bật/Tắt chế độ ngắm chụp ảnh
         if (Input.GetKeyDown(toggleKey))
         {
