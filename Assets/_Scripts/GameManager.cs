@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
                 ShowToast("🌸 [Nhiệm vụ Mới]: Hãy chụp ảnh Cành Đào Phai trước hiên nhà!");
                 break;
             case QuestState.PhotoTaken:
-                ShowToast("✨ [Mục Tiêu Hoàn Thành]: Đã chụp đúng cành đào phai! Hãy mang về cho Bác An.");
+                ShowToast("✨ [Mục Tiêu Hoàn Thành]: Đã lưu cành đào vào Album! Bấm [Tab] để xem.");
                 break;
             case QuestState.Completed:
                 ShowToast("🎉 [Hoàn Thành Nhiệm Vụ]: Bác An rất thích bức ảnh của bạn!");
@@ -171,6 +171,12 @@ public class GameManager : MonoBehaviour
 
                     // Chuyển sang Trạng thái 2: Đã chụp đúng bức ảnh yêu cầu
                     SetQuestState(QuestState.PhotoTaken);
+
+                    // Nạp ngay ảnh vừa chụp vào trang Album Kỷ Niệm
+                    if (AlbumUIController.Instance != null)
+                    {
+                        AlbumUIController.Instance.RefreshAlbumData();
+                    }
                     return;
                 }
             }

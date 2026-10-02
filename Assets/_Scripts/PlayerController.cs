@@ -217,7 +217,10 @@ public class PlayerController : MonoBehaviour
         }
 
         // 3. Kiểm tra Animator nếu có
-        TryGetComponent<Animator>(out animator);
+        if (TryGetComponent<Animator>(out animator))
+        {
+            CacheAnimatorParameters();
+        }
 
         // 4. Tự động tìm Main Camera nếu cameraTransform đang trống
         if (cameraTransform == null && Camera.main != null)
@@ -241,6 +244,12 @@ public class PlayerController : MonoBehaviour
         if (FindAnyObjectByType<GameManager>() == null)
         {
             gameObject.AddComponent<GameManager>();
+        }
+
+        // 8. Tự động gắn AlbumUIController (Cuốn Album Kỷ Niệm của Arthur) nếu chưa có
+        if (FindAnyObjectByType<AlbumUIController>() == null)
+        {
+            gameObject.AddComponent<AlbumUIController>();
         }
     }
 
@@ -524,20 +533,33 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Animator Integration
+    private readonly System.Collections.Generic.HashSet<int> animatorParamHashes = new System.Collections.Generic.HashSet<int>();
+
+    private void CacheAnimatorParameters()
+    {
+        animatorParamHashes.Clear();
+        if (animator == null || animator.runtimeAnimatorController == null) return;
+
+        foreach (AnimatorControllerParameter param in animator.parameters)
+        {
+            animatorParamHashes.Add(param.nameHash);
+        }
+    }
+
     /// <summary>
-    /// Đồng bộ thông số với Animator nếu có gắn trên nhân vật
+    /// Đồng bộ thông số với Animator nếu có gắn trên nhân vật (an toàn, chỉ set param nào thực sự tồn tại)
     /// </summary>
     private void UpdateAnimator()
     {
-        if (animator == null) return;
+        if (animator == null || animator.runtimeAnimatorController == null) return;
 
-        animator.SetFloat(AnimHashMoveX, normalizedMoveDirection.x);
-        animator.SetFloat(AnimHashMoveY, normalizedMoveDirection.y);
-        animator.SetFloat(AnimHashLastMoveX, lastFacingVector.x);
-        animator.SetFloat(AnimHashLastMoveY, lastFacingVector.y);
-        animator.SetFloat(AnimHashSpeed, currentVelocity.magnitude);
-        animator.SetBool(AnimHashIsMoving, isMoving);
-        animator.SetBool(AnimHashIsJogging, isJogging);
+        if (animatorParamHashes.Contains(AnimHashMoveX)) animator.SetFloat(AnimHashMoveX, normalizedMoveDirection.x);
+        if (animatorParamHashes.Contains(AnimHashMoveY)) animator.SetFloat(AnimHashMoveY, normalizedMoveDirection.y);
+        if (animatorParamHashes.Contains(AnimHashLastMoveX)) animator.SetFloat(AnimHashLastMoveX, lastFacingVector.x);
+        if (animatorParamHashes.Contains(AnimHashLastMoveY)) animator.SetFloat(AnimHashLastMoveY, lastFacingVector.y);
+        if (animatorParamHashes.Contains(AnimHashSpeed)) animator.SetFloat(AnimHashSpeed, currentVelocity.magnitude);
+        if (animatorParamHashes.Contains(AnimHashIsMoving)) animator.SetBool(AnimHashIsMoving, isMoving);
+        if (animatorParamHashes.Contains(AnimHashIsJogging)) animator.SetBool(AnimHashIsJogging, isJogging);
     }
     #endregion
 
@@ -567,7 +589,7 @@ public class PlayerController : MonoBehaviour
         if (!showDebugHUD || !Application.isPlaying) return;
 
         // Bảng giao diện HUD tiện lợi để theo dõi cảm giác di chuyển khi Play Mode
-        GUILayout.BeginArea(new Rect(18, 18, 330, 265), GUI.skin.box);
+        GUILayout.BeginArea(new Rect(18, 18, 330, 285), GUI.skin.box);
         
         GUIStyle headerStyle = new GUIStyle(GUI.skin.label)
         {
@@ -579,7 +601,8 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("🌿 A Year in Warmth - Character Controller", headerStyle);
         GUILayout.Space(4);
 
-        string paceState = (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive) ? "Đang trò chuyện cùng NPC" :
+        string paceState = (AlbumUIController.Instance != null && AlbumUIController.Instance.IsOpen) ? "Đang mở Cuốn Album Kỷ Niệm" :
+                           (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive) ? "Đang trò chuyện cùng NPC" :
                            isInputLocked ? "Đang ngắm máy ảnh (Viewfinder Mode)" :
                            !isMoving ? "Đang dừng chân ngắm cảnh (Idle)" :
                            isJogging ? "Rảo bước nhanh (Jogging)" : "Đi bộ thư thả (Scenic Walk)";
@@ -595,6 +618,7 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("💡 Thả phím: Nhân vật dừng lại ngay lập tức");
         GUILayout.Label("📸 [Phím cách Space]: Mở/Đóng khung ngắm chụp ảnh");
         GUILayout.Label("💬 [E]: Tương tác trò chuyện khi lại gần NPC");
+        GUILayout.Label("📖 [Tab]: Mở Cuốn Album Kỷ Niệm của Arthur");
 
         GUILayout.EndArea();
     }
