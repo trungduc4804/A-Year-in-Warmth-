@@ -220,12 +220,6 @@ public class PlayerController : MonoBehaviour
         if (TryGetComponent<Animator>(out animator))
         {
             CacheAnimatorParameters();
-            if (animator.runtimeAnimatorController != null)
-            {
-                // Khi có Animator Controller 4 hướng, để Animator tự quản lý sprite mà không bị script lật mặt chồng chéo
-                facingMode = FacingMode.None;
-                if (spriteRenderer != null) spriteRenderer.flipX = false;
-            }
         }
 
         // 4. Tự động tìm Main Camera nếu cameraTransform đang trống

@@ -30,13 +30,6 @@ public class DialogueManager : MonoBehaviour
 
     [Tooltip("Âm thanh gõ chữ nhẹ nhàng (nếu để trống, script sẽ tự tổng hợp âm thanh gỗ ấm).")]
     public AudioClip customTypeSound;
-
-    [Header("=== NPC MẪU (DEMO NPC SPAWNER) ===")]
-    [Tooltip("Tự động sinh một khối vuông NPC mẫu (đã được GameManager thay thế bằng Bác An).")]
-    public bool autoSpawnDemoNPC = false;
-
-    [Tooltip("Màu sắc của khối vuông NPC đại diện.")]
-    public Color defaultNpcColor = new Color(0.88f, 0.48f, 0.28f, 1f); // Màu đất nung ấm áp
     #endregion
 
     #region Public Properties
@@ -375,62 +368,6 @@ public class DialogueManager : MonoBehaviour
         stylesInitialized = true;
     }
     #endregion
-
-    #region Demo NPC Spawner
-    /// <summary>
-    /// Tự động sinh ra khối vuông NPC Rowan bên cạnh Player để người dùng thử nghiệm ngay lập tức
-    /// </summary>
-    [ContextMenu("🌿 Sinh NPC Mẫu (Spawn Demo NPC)")]
-    public void SpawnDemoNPC()
-    {
-        // Tìm vị trí tương đối so với Player
-        Vector3 spawnPos = new Vector3(2.5f, 0.5f, 0f);
-        if (player != null)
-        {
-            spawnPos = player.transform.position + new Vector3(2.5f, 0.3f, 0f);
-        }
-
-        GameObject npcObj = new GameObject("NPC_Rowan");
-        npcObj.transform.position = spawnPos;
-
-        // 1. SpriteRenderer hiển thị khối vuông đại diện cho NPC
-        SpriteRenderer sr = npcObj.AddComponent<SpriteRenderer>();
-        sr.sprite = CreateSimpleSquareSprite();
-        sr.color = defaultNpcColor;
-        sr.sortingOrder = 5;
-
-        // 2. Tạo một chiếc mũ/khăn choàng nhỏ trên đầu để khối vuông trông dễ thương
-        GameObject hatObj = new GameObject("Hat");
-        hatObj.transform.SetParent(npcObj.transform);
-        hatObj.transform.localPosition = new Vector3(0f, 0.45f, 0f);
-        hatObj.transform.localScale = new Vector3(0.7f, 0.25f, 1f);
-        SpriteRenderer hatSr = hatObj.AddComponent<SpriteRenderer>();
-        hatSr.sprite = CreateSimpleSquareSprite();
-        hatSr.color = new Color(0.35f, 0.65f, 0.35f, 1f); // Nón xanh lá
-        hatSr.sortingOrder = 6;
-
-        // 3. Thêm component NPCInteractable với các câu thoại mẫu ấm áp
-        NPCInteractable npc = npcObj.AddComponent<NPCInteractable>();
-        npc.npcName = "Bác Rowan (Làm Vườn)";
-        npc.dialogueLines = new string[]
-        {
-            "Chào cháu! Một ngày ngập tràn ánh nắng và gió mát trong khu vườn của chúng ta, phải không?",
-            "Bác thấy cháu đang cầm theo chiếc máy ảnh xinh xắn đấy. Hãy bấm phím [Space] để thử chụp những tán cây mùa thu xem sao nhé!",
-            "Mỗi góc nhỏ ở nơi này đều chất chứa những khoảnh khắc ấm áp đang chờ cháu lưu giữ lại đấy."
-        };
-
-        Debug.Log("[DialogueManager] 🌿 Đã tạo khối vuông đại diện cho NPC_Rowan tại toạ độ " + spawnPos);
-    }
-
-    private Sprite CreateSimpleSquareSprite()
-    {
-        Texture2D texture = new Texture2D(32, 32);
-        Color[] cols = new Color[32 * 32];
-        for (int i = 0; i < cols.Length; i++) cols[i] = Color.white;
-        texture.SetPixels(cols);
-        texture.Apply();
-        return Sprite.Create(texture, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f), 32);
-    }
 
     /// <summary>
     /// Tạo âm thanh gõ nhẹ (Soft Wooden Tap) tổng hợp tự động cho hiệu ứng typewriter

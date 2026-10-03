@@ -32,9 +32,6 @@ public class GameManager : MonoBehaviour
     [Tooltip("ID của mục tiêu cần chụp cho nhiệm vụ.")]
     public string requiredTargetId = "PeachBlossom";
 
-    [Tooltip("Tự động sinh NPC Bác An và Cây Đào Phai trong Scene nếu chưa có để test ngay.")]
-    public bool autoSpawnQuestObjects = true;
-
     [Header("=== ÂM THANH HOÀN THÀNH MỤC TIÊU ===")]
     [Tooltip("Âm thanh chuông báo khi hoàn thành mục tiêu chụp ảnh.")]
     public AudioClip questUpdateSound;
@@ -97,14 +94,6 @@ public class GameManager : MonoBehaviour
         darkPixel = new Texture2D(1, 1);
         darkPixel.SetPixel(0, 0, new Color(0.12f, 0.14f, 0.18f, 0.93f));
         darkPixel.Apply();
-    }
-
-    private void Start()
-    {
-        if (autoSpawnQuestObjects)
-        {
-            SetupQuestWorldObjects();
-        }
     }
 
     private void Update()
@@ -224,166 +213,6 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
-    #region Auto-Spawn Quest World (Bác An & Cây Đào Phai)
-    /// <summary>
-    /// Tự động tạo Bác An và Cây Đào Phai nếu chưa có trong Scene để bạn test ngay tức thì
-    /// </summary>
-    public void SetupQuestWorldObjects()
-    {
-        PlayerController player = FindAnyObjectByType<PlayerController>();
-        Vector3 playerPos = player != null ? player.transform.position : Vector3.zero;
-
-        // 1. Tạo Bác An (NPC_BacAn) nếu chưa có
-        NPCInteractable existingNpc = FindAnyObjectByType<NPCInteractable>();
-        if (existingNpc == null)
-        {
-            GameObject bacAnObj = new GameObject("NPC_BacAn");
-            bacAnObj.transform.position = playerPos + new Vector3(2.5f, 0.5f, 0f);
-
-            SpriteRenderer sr = bacAnObj.AddComponent<SpriteRenderer>();
-            sr.sprite = CreateSimpleSquareSprite();
-            sr.color = new Color(0.88f, 0.48f, 0.28f, 1f); // Màu áo cam đất ấm
-            sr.sortingOrder = 5;
-
-            // Khăn choàng ấm áp
-            GameObject scarfObj = new GameObject("Scarf");
-            scarfObj.transform.SetParent(bacAnObj.transform);
-            scarfObj.transform.localPosition = new Vector3(0f, 0.42f, 0f);
-            scarfObj.transform.localScale = new Vector3(0.75f, 0.25f, 1f);
-            SpriteRenderer scarfSr = scarfObj.AddComponent<SpriteRenderer>();
-            scarfSr.sprite = CreateSimpleSquareSprite();
-            scarfSr.color = new Color(0.75f, 0.35f, 0.25f, 1f);
-            scarfSr.sortingOrder = 6;
-
-            NPCInteractable npc = bacAnObj.AddComponent<NPCInteractable>();
-            npc.npcName = "Bác An (Chủ Nhà)";
-        }
-
-        // 2. Tạo Cây Đào Phai (PeachBlossomTree) nếu chưa có
-        PhotoTarget existingTarget = FindAnyObjectByType<PhotoTarget>();
-        if (existingTarget == null)
-        {
-            GameObject treeObj = new GameObject("Cây Đào Phai (Peach Blossom)");
-            treeObj.transform.position = playerPos + new Vector3(5.5f, 2.0f, 0f);
-
-            // Gốc thân cây
-            GameObject trunk = new GameObject("Trunk");
-            trunk.transform.SetParent(treeObj.transform);
-            trunk.transform.localPosition = new Vector3(0f, -0.4f, 0f);
-            trunk.transform.localScale = new Vector3(0.45f, 1.2f, 1f);
-            SpriteRenderer trunkSr = trunk.AddComponent<SpriteRenderer>();
-            trunkSr.sprite = CreateSimpleSquareSprite();
-            trunkSr.color = new Color(0.42f, 0.28f, 0.18f, 1f); // Thân gỗ nâu sẫm
-            trunkSr.sortingOrder = 3;
-
-            // Tán hoa đào phai hồng phấn
-            GameObject canopy = new GameObject("Canopy_Blossom");
-            canopy.transform.SetParent(treeObj.transform);
-            canopy.transform.localPosition = new Vector3(0f, 0.6f, 0f);
-            canopy.transform.localScale = new Vector3(2.2f, 2.0f, 1f);
-            SpriteRenderer canopySr = canopy.AddComponent<SpriteRenderer>();
-            canopySr.sprite = CreateSimpleSquareSprite();
-            canopySr.color = new Color(1.0f, 0.72f, 0.80f, 0.95f); // Màu hồng đào phai
-            canopySr.sortingOrder = 4;
-
-            // Các đốm hoa đào nhỏ lung linh
-            for (int i = 0; i < 4; i++)
-            {
-                GameObject flower = new GameObject("Petals_" + i);
-                flower.transform.SetParent(canopy.transform);
-                float angle = i * 90f * Mathf.Deg2Rad;
-                flower.transform.localPosition = new Vector3(Mathf.Cos(angle) * 0.35f, Mathf.Sin(angle) * 0.35f, 0f);
-                flower.transform.localScale = new Vector3(0.3f, 0.3f, 1f);
-                SpriteRenderer flowerSr = flower.AddComponent<SpriteRenderer>();
-                flowerSr.sprite = CreateSimpleSquareSprite();
-                flowerSr.color = new Color(1.0f, 0.88f, 0.92f, 1f);
-                flowerSr.sortingOrder = 5;
-            }
-
-            // Gắn PhotoTarget để máy ảnh có thể nhận diện và chụp
-            PhotoTarget pt = treeObj.AddComponent<PhotoTarget>();
-            pt.targetId = requiredTargetId;
-            pt.targetDisplayName = "Cành Đào Phai";
-            pt.maxCaptureDistance = 14.0f;
-            pt.targetSubjectRadius = 1.5f;
-
-            Debug.Log("[GameManager] 🌸 Đã sinh Cây Đào Phai (PhotoTarget) tại toạ độ: " + treeObj.transform.position);
-        }
-
-        // 3. Tạo Chiếu Gói Bánh Chưng bên hiên nhà gần Bác An
-        BanhChungTable existingTable = FindAnyObjectByType<BanhChungTable>();
-        if (existingTable == null)
-        {
-            GameObject tableObj = new GameObject("Chiếu Gói Bánh Chưng (Bánh Chưng Table)");
-            tableObj.transform.position = playerPos + new Vector3(2.5f, -1.8f, 0f);
-
-            // Chiếu cói vàng rơm
-            GameObject mat = new GameObject("StrawMat");
-            mat.transform.SetParent(tableObj.transform);
-            mat.transform.localPosition = Vector3.zero;
-            mat.transform.localScale = new Vector3(1.8f, 1.4f, 1f);
-            SpriteRenderer matSr = mat.AddComponent<SpriteRenderer>();
-            matSr.sprite = CreateSimpleSquareSprite();
-            matSr.color = new Color(0.88f, 0.80f, 0.62f, 1f); // Vàng rơm
-            matSr.sortingOrder = 2;
-
-            // Viền đỏ chiếu hoa
-            GameObject border = new GameObject("MatBorder");
-            border.transform.SetParent(tableObj.transform);
-            border.transform.localPosition = Vector3.zero;
-            border.transform.localScale = new Vector3(1.9f, 1.5f, 1f);
-            SpriteRenderer borderSr = border.AddComponent<SpriteRenderer>();
-            borderSr.sprite = CreateSimpleSquareSprite();
-            borderSr.color = new Color(0.75f, 0.22f, 0.18f, 1f); // Đỏ điều
-            borderSr.sortingOrder = 1;
-
-            // Chiếc khuôn gỗ vuông ở giữa chiếu
-            GameObject mold = new GameObject("WoodenMold");
-            mold.transform.SetParent(tableObj.transform);
-            mold.transform.localPosition = new Vector3(0f, 0f, 0f);
-            mold.transform.localScale = new Vector3(0.55f, 0.55f, 1f);
-            SpriteRenderer moldSr = mold.AddComponent<SpriteRenderer>();
-            moldSr.sprite = CreateSimpleSquareSprite();
-            moldSr.color = new Color(0.52f, 0.35f, 0.22f, 1f); // Gỗ nâu
-            moldSr.sortingOrder = 4;
-
-            // Đĩa lá dong xanh bên cạnh khuôn
-            GameObject leafPlate = new GameObject("DongLeaves");
-            leafPlate.transform.SetParent(tableObj.transform);
-            leafPlate.transform.localPosition = new Vector3(-0.55f, 0f, 0f);
-            leafPlate.transform.localScale = new Vector3(0.4f, 0.6f, 1f);
-            SpriteRenderer leafSr = leafPlate.AddComponent<SpriteRenderer>();
-            leafSr.sprite = CreateSimpleSquareSprite();
-            leafSr.color = new Color(0.24f, 0.58f, 0.28f, 1f); // Xanh lá dong
-            leafSr.sortingOrder = 3;
-
-            // Thúng gạo nếp trắng thơm
-            GameObject riceBasket = new GameObject("RiceBasket");
-            riceBasket.transform.SetParent(tableObj.transform);
-            riceBasket.transform.localPosition = new Vector3(0.55f, 0.2f, 0f);
-            riceBasket.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
-            SpriteRenderer riceSr = riceBasket.AddComponent<SpriteRenderer>();
-            riceSr.sprite = CreateSimpleSquareSprite();
-            riceSr.color = new Color(0.96f, 0.95f, 0.90f, 1f); // Trắng nếp
-            riceSr.sortingOrder = 3;
-
-            // Gắn thành phần tương tác BanhChungTable
-            tableObj.AddComponent<BanhChungTable>();
-
-            Debug.Log("[GameManager] 🍱 Đã sinh Chiếu Gói Bánh Chưng tại toạ độ: " + tableObj.transform.position);
-        }
-    }
-
-    private Sprite CreateSimpleSquareSprite()
-    {
-        Texture2D texture = new Texture2D(32, 32);
-        Color[] cols = new Color[32 * 32];
-        for (int i = 0; i < cols.Length; i++) cols[i] = Color.white;
-        texture.SetPixels(cols);
-        texture.Apply();
-        return Sprite.Create(texture, new Rect(0, 0, 32, 32), new Vector2(0.5f, 0.5f), 32);
-    }
 
     private AudioClip GenerateSuccessChimeClip()
     {
