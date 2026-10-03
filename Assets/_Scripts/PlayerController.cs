@@ -67,8 +67,8 @@ public class PlayerController : MonoBehaviour
     public float decelerationTime = 0.0f;
 
     [Header("=== HƯỚNG NHÌN 8 HƯỚNG & XOAY (FACING) ===")]
-    [Tooltip("Chế độ hướng nhìn khi di chuyển 8 hướng.")]
-    public FacingMode facingMode = FacingMode.FlipHorizontalOnly;
+    [Tooltip("Chế độ hướng nhìn khi di chuyển (Chọn 'None' nếu Animator đã có sẵn animation cho các hướng).")]
+    public FacingMode facingMode = FacingMode.None;
 
     [Tooltip("Tốc độ xoay (độ/giây) khi dùng chế độ SmoothRotateTowardsDirection.")]
     public float rotationSpeed = 720.0f;

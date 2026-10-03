@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: 7469e0ea635932e47a63bb436cbc9bd2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6412046828919090106
+    second: Arthur8_Idle_4frames_48x64_0
+  - first:
+      213: 9049708692481948476
+    second: Arthur8_Idle_4frames_48x64_1
+  - first:
+      213: -5973562552440344335
+    second: Arthur8_Idle_4frames_48x64_2
+  - first:
+      213: 2650300202046305516
+    second: Arthur8_Idle_4frames_48x64_3
+  - first:
+      213: 8351502901836720889
+    second: Arthur8_Idle_4frames_48x64_4
+  - first:
+      213: 304750856615643786
+    second: Arthur8_Idle_4frames_48x64_5
+  - first:
+      213: -2437334098106843014
+    second: Arthur8_Idle_4frames_48x64_6
+  - first:
+      213: 2861700225969554265
+    second: Arthur8_Idle_4frames_48x64_7
+  - first:
+      213: -4417240489698609595
+    second: Arthur8_Idle_4frames_48x64_8
+  - first:
+      213: -6268274061808218132
+    second: Arthur8_Idle_4frames_48x64_9
+  - first:
+      213: 3115551458167316426
+    second: Arthur8_Idle_4frames_48x64_10
+  - first:
+      213: 708786448602022690
+    second: Arthur8_Idle_4frames_48x64_11
+  - first:
+      213: -5895012050512769975
+    second: Arthur8_Idle_4frames_48x64_12
+  - first:
+      213: -82946087885566692
+    second: Arthur8_Idle_4frames_48x64_13
+  - first:
+      213: 5374850379981334031
+    second: Arthur8_Idle_4frames_48x64_14
+  - first:
+      213: 8673103252416587183
+    second: Arthur8_Idle_4frames_48x64_15
+  - first:
+      213: 247254220261428921
+    second: Arthur8_Idle_4frames_48x64_16
+  - first:
+      213: 7463065879906754339
+    second: Arthur8_Idle_4frames_48x64_17
+  - first:
+      213: -8412365146058821196
+    second: Arthur8_Idle_4frames_48x64_18
+  - first:
+      213: -2633511969497371710
+    second: Arthur8_Idle_4frames_48x64_19
+  - first:
+      213: 3351600162567688470
+    second: Arthur8_Idle_4frames_48x64_20
+  - first:
+      213: 109133000841702326
+    second: Arthur8_Idle_4frames_48x64_21
+  - first:
+      213: 5310556955814844024
+    second: Arthur8_Idle_4frames_48x64_22
+  - first:
+      213: -2319740635710424507
+    second: Arthur8_Idle_4frames_48x64_23
+  - first:
+      213: -7285343640128555394
+    second: Arthur8_Idle_4frames_48x64_24
+  - first:
+      213: 7254822394009947845
+    second: Arthur8_Idle_4frames_48x64_25
+  - first:
+      213: -441622447793664621
+    second: Arthur8_Idle_4frames_48x64_26
+  - first:
+      213: -3638956864172783902
+    second: Arthur8_Idle_4frames_48x64_27
+  - first:
+      213: 2985008077942632172
+    second: Arthur8_Idle_4frames_48x64_28
+  - first:
+      213: -9212998148246836932
+    second: Arthur8_Idle_4frames_48x64_29
+  - first:
+      213: 6299056606143384919
+    second: Arthur8_Idle_4frames_48x64_30
+  - first:
+      213: -6831368483848566919
+    second: Arthur8_Idle_4frames_48x64_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 448
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abb64e05e9a2cf850800000000000000
+      internalID: 6412046828919090106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_1
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 448
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3bb620cb16079d70800000000000000
+      internalID: 9049708692481948476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_2
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 448
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f0b7320284a91da0800000000000000
+      internalID: -5973562552440344335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_3
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 448
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce4bd1bedf1c7c420800000000000000
+      internalID: 2650300202046305516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_4
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 384
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fa2f9c14af76e370800000000000000
+      internalID: 8351502901836720889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_5
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 384
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8a42991a41ba3400800000000000000
+      internalID: 304750856615643786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_6
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 384
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7005632d89dc2ed0800000000000000
+      internalID: -2437334098106843014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_7
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 384
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 953029e813dc6b720800000000000000
+      internalID: 2861700225969554265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_8
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 320
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 546ba0c9d2fc2b2c0800000000000000
+      internalID: -4417240489698609595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_9
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 320
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cef402793fd9209a0800000000000000
+      internalID: -6268274061808218132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_10
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 320
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acf53875b89ac3b20800000000000000
+      internalID: 3115551458167316426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_11
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 320
+        width: 28
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 223c88a058d16d900800000000000000
+      internalID: 708786448602022690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_12
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 256
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94c0a8ee5c5b03ea0800000000000000
+      internalID: -5895012050512769975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_13
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 256
+        width: 28
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1d8218f8f059def0800000000000000
+      internalID: -82946087885566692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_14
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 256
+        width: 28
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0629a381fd479a40800000000000000
+      internalID: 5374850379981334031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_15
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 256
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa5639cb47d0d5870800000000000000
+      internalID: 8673103252416587183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_16
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 192
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9be06ef376c6e6300800000000000000
+      internalID: 247254220261428921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_17
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 192
+        width: 28
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32f1e2370e2229760800000000000000
+      internalID: 7463065879906754339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_18
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 192
+        width: 28
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b179446876414b80800000000000000
+      internalID: -8412365146058821196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_19
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 192
+        width: 28
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cbae5211d2e37bd0800000000000000
+      internalID: -2633511969497371710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_20
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 128
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6111dfe1796438e20800000000000000
+      internalID: 3351600162567688470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_21
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 128
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bb2174d2e7b38100800000000000000
+      internalID: 109133000841702326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_22
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 128
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 876d2de2a63e2b940800000000000000
+      internalID: 5310556955814844024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_23
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 128
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54af07dae20aecfd0800000000000000
+      internalID: -2319740635710424507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_24
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 64
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e767c770f8245ea90800000000000000
+      internalID: -7285343640128555394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_25
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 64
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce0387978e4ea460800000000000000
+      internalID: 7254822394009947845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_26
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 64
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39d8b6a39ba0fd9f0800000000000000
+      internalID: -441622447793664621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_27
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 64
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e603061304df7dc0800000000000000
+      internalID: -3638956864172783902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_28
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cee21791801ec6920800000000000000
+      internalID: 2985008077942632172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_29
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 0
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c396a692ffad42080800000000000000
+      internalID: -9212998148246836932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_30
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 0
+        width: 27
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75d01450c9eba6750800000000000000
+      internalID: 6299056606143384919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arthur8_Idle_4frames_48x64_31
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 0
+        width: 27
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 977486ede8a1231a0800000000000000
+      internalID: -6831368483848566919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Arthur8_Idle_4frames_48x64_0: 6412046828919090106
+      Arthur8_Idle_4frames_48x64_1: 9049708692481948476
+      Arthur8_Idle_4frames_48x64_10: 3115551458167316426
+      Arthur8_Idle_4frames_48x64_11: 708786448602022690
+      Arthur8_Idle_4frames_48x64_12: -5895012050512769975
+      Arthur8_Idle_4frames_48x64_13: -82946087885566692
+      Arthur8_Idle_4frames_48x64_14: 5374850379981334031
+      Arthur8_Idle_4frames_48x64_15: 8673103252416587183
+      Arthur8_Idle_4frames_48x64_16: 247254220261428921
+      Arthur8_Idle_4frames_48x64_17: 7463065879906754339
+      Arthur8_Idle_4frames_48x64_18: -8412365146058821196
+      Arthur8_Idle_4frames_48x64_19: -2633511969497371710
+      Arthur8_Idle_4frames_48x64_2: -5973562552440344335
+      Arthur8_Idle_4frames_48x64_20: 3351600162567688470
+      Arthur8_Idle_4frames_48x64_21: 109133000841702326
+      Arthur8_Idle_4frames_48x64_22: 5310556955814844024
+      Arthur8_Idle_4frames_48x64_23: -2319740635710424507
+      Arthur8_Idle_4frames_48x64_24: -7285343640128555394
+      Arthur8_Idle_4frames_48x64_25: 7254822394009947845
+      Arthur8_Idle_4frames_48x64_26: -441622447793664621
+      Arthur8_Idle_4frames_48x64_27: -3638956864172783902
+      Arthur8_Idle_4frames_48x64_28: 2985008077942632172
+      Arthur8_Idle_4frames_48x64_29: -9212998148246836932
+      Arthur8_Idle_4frames_48x64_3: 2650300202046305516
+      Arthur8_Idle_4frames_48x64_30: 6299056606143384919
+      Arthur8_Idle_4frames_48x64_31: -6831368483848566919
+      Arthur8_Idle_4frames_48x64_4: 8351502901836720889
+      Arthur8_Idle_4frames_48x64_5: 304750856615643786
+      Arthur8_Idle_4frames_48x64_6: -2437334098106843014
+      Arthur8_Idle_4frames_48x64_7: 2861700225969554265
+      Arthur8_Idle_4frames_48x64_8: -4417240489698609595
+      Arthur8_Idle_4frames_48x64_9: -6268274061808218132
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -107,15 +107,6 @@ public class DialogueManager : MonoBehaviour
         darkPixel.Apply();
     }
 
-    private void Start()
-    {
-        // Tự động tạo NPC kiểm tra nếu chưa có
-        if (autoSpawnDemoNPC && FindAnyObjectByType<NPCInteractable>() == null)
-        {
-            SpawnDemoNPC();
-        }
-    }
-
     private void Update()
     {
         if (!isDialogueActive) return;
