@@ -214,11 +214,13 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 0f; // Tránh trọng lực kéo rơi nhân vật trong game Top-Down
             rb.freezeRotation = true; // Tránh va chạm làm xoay lật nhân vật vật lý
             rb.interpolation = RigidbodyInterpolation2D.Interpolate; // Khử hiện tượng giật hình (micro-stutter)
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Đảm bảo KHÔNG bị Freeze Position làm đứng đơ
         }
 
         // 3. Kiểm tra Animator nếu có
         if (TryGetComponent<Animator>(out animator))
         {
+            animator.applyRootMotion = false; // Đảm bảo không bị Root Motion khóa cứng vị trí nhân vật
             CacheAnimatorParameters();
         }
 
@@ -226,36 +228,6 @@ public class PlayerController : MonoBehaviour
         if (cameraTransform == null && Camera.main != null)
         {
             cameraTransform = Camera.main.transform;
-        }
-
-        // 5. Tự động gắn ViewfinderController (Cơ chế ngắm chụp ảnh) nếu chưa có
-        if (FindAnyObjectByType<ViewfinderController>() == null)
-        {
-            gameObject.AddComponent<ViewfinderController>();
-        }
-
-        // 6. Tự động gắn DialogueManager (Hệ thống hộp thoại tương tác NPC) nếu chưa có
-        if (FindAnyObjectByType<DialogueManager>() == null)
-        {
-            gameObject.AddComponent<DialogueManager>();
-        }
-
-        // 7. Tự động gắn GameManager (Hệ thống Trạng thái Game & Quản lý Nhiệm vụ) nếu chưa có
-        if (FindAnyObjectByType<GameManager>() == null)
-        {
-            gameObject.AddComponent<GameManager>();
-        }
-
-        // 8. Tự động gắn AlbumUIController (Cuốn Album Kỷ Niệm của Arthur) nếu chưa có
-        if (FindAnyObjectByType<AlbumUIController>() == null)
-        {
-            gameObject.AddComponent<AlbumUIController>();
-        }
-
-        // 9. Tự động gắn BanhChungMinigame (Minigame gói bánh chưng truyền thống) nếu chưa có
-        if (FindAnyObjectByType<BanhChungMinigame>() == null)
-        {
-            gameObject.AddComponent<BanhChungMinigame>();
         }
     }
 
@@ -300,6 +272,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void ReadInput()
     {
+        // Phím Escape giúp thoát nhanh các chế độ khóa di chuyển nếu đang bị kẹt
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isInputLocked = false;
+        }
+
         bool isMinigameOpen = BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen;
         if (isInputLocked || isMinigameOpen)
         {
