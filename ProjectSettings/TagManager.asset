@@ -44,8 +44,14 @@ TagManager:
   - name: Ground
     uniqueID: 2686600987
     locked: 0
+  - name: Wall
+    uniqueID: 2132850289
+    locked: 0
   - name: Player
     uniqueID: 892301949
+    locked: 0
+  - name: Deco
+    uniqueID: 2126256917
     locked: 0
   m_RenderingLayers:
   - Default
