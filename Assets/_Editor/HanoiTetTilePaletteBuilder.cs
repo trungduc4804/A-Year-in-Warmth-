@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -68,3 +69,4 @@ public static class HanoiTetTilePaletteBuilder
                tileName.Contains("Blocker");
     }
 }
+#endif
