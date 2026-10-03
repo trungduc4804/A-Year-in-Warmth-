@@ -235,7 +235,6 @@ public class GameManager : MonoBehaviour
         clip.SetData(samples, 0);
         return clip;
     }
-    #endregion
 
     #region GUI Drawing - Bảng Nhiệm Vụ & Thông Báo Toast
     private void OnGUI()

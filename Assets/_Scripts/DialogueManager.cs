@@ -391,5 +391,4 @@ public class DialogueManager : MonoBehaviour
         clip.SetData(samples, 0);
         return clip;
     }
-    #endregion
 }
