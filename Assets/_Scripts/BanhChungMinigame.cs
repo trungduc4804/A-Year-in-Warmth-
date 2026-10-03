@@ -79,7 +79,6 @@ public class BanhChungMinigame : MonoBehaviour
     private float feedbackTimer = 0f;
 
     // Wrapping Animation
-    private float wrapAnimTimer = 0f;
     private float sparkleTimer = 0f;
 
     // GUI Textures & Styles

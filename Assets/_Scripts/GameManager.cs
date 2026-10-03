@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         questPhoto = snappedPhoto;
 
         // Tìm tất cả PhotoTarget trong Scene để kiểm tra nhiệm vụ
-        PhotoTarget[] targets = FindObjectsByType<PhotoTarget>(FindObjectsSortMode.None);
+        PhotoTarget[] targets = FindObjectsByType<PhotoTarget>();
         foreach (PhotoTarget target in targets)
         {
             if (target.targetId == requiredTargetId)

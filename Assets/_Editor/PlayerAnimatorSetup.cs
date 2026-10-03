@@ -88,7 +88,7 @@ public static class PlayerAnimatorSetup
         }
 
         // 7. Tạo Blend Tree cho Trạng thái Đứng Yên (IDLE)
-        AnimatorState idleState = sm.CreateBlendTreeInController("Idle", out BlendTree idleTree);
+        AnimatorState idleState = controller.CreateBlendTreeInController("Idle", out BlendTree idleTree, 0);
         idleState.name = "Idle";
         idleTree.name = "Idle Blend Tree";
         idleTree.blendType = BlendTreeType.SimpleDirectional2D;
@@ -101,7 +101,7 @@ public static class PlayerAnimatorSetup
         idleTree.AddChild(idleRightClip, new Vector2(1f, 0f));
 
         // 8. Tạo Blend Tree cho Trạng thái Di Chuyển (WALK)
-        AnimatorState walkState = sm.CreateBlendTreeInController("Walk", out BlendTree walkTree);
+        AnimatorState walkState = controller.CreateBlendTreeInController("Walk", out BlendTree walkTree, 0);
         walkState.name = "Walk";
         walkTree.name = "Walk Blend Tree";
         walkTree.blendType = BlendTreeType.SimpleDirectional2D;
@@ -114,8 +114,19 @@ public static class PlayerAnimatorSetup
         walkTree.AddChild(walkRightClip, new Vector2(1f, 0f));
 
         // Vị trí các node trên đồ thị Animator
-        idleState.position = new Vector3(300f, 100f, 0f);
-        walkState.position = new Vector3(300f, 220f, 0f);
+        ChildAnimatorState[] states = sm.states;
+        for (int i = 0; i < states.Length; i++)
+        {
+            if (states[i].state == idleState)
+            {
+                states[i].position = new Vector3(300f, 100f, 0f);
+            }
+            else if (states[i].state == walkState)
+            {
+                states[i].position = new Vector3(300f, 220f, 0f);
+            }
+        }
+        sm.states = states;
         sm.defaultState = idleState;
 
         // 9. Tạo Chuyển trạng thái (Transitions) giữa Idle và Walk
