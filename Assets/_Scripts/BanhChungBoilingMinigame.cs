@@ -330,6 +330,10 @@ public class BanhChungBoilingMinigame : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.CompleteBanhChungBoiling();
+            if (GameManager.Instance.CurrentQuestState == QuestState.BanhChungWrapped)
+            {
+                GameManager.Instance.SetQuestState(QuestState.BanhChungBoiled);
+            }
         }
     }
 

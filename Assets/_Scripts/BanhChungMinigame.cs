@@ -314,6 +314,10 @@ public class BanhChungMinigame : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.AddBanhChungReward();
+            if (GameManager.Instance.CurrentQuestState == QuestState.BanhChungUnlocked)
+            {
+                GameManager.Instance.SetQuestState(QuestState.BanhChungWrapped);
+            }
         }
     }
 

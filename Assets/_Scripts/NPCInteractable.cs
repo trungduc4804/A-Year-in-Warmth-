@@ -140,13 +140,13 @@ public class NPCInteractable : MonoBehaviour
                 case QuestState.NotStarted:
                     string[] state0Lines = new string[]
                     {
-                        "Chào cháu Arthur! Tiết trời hôm nay thật dễ chịu, cháu đang dạo chơi ngắm cảnh đấy à?",
-                        "Trước hiên nhà bác có cành đào phai vừa chớm nở đẹp lắm. Bác thì già rồi, chân yếu mắt mờ chẳng ngắm rõ được từng cánh hoa trong gió.",
-                        "Bác thấy cháu có chiếc máy ảnh đó, cháu chụp giúp bác một bức ảnh cành đào phai trước hiên nhà được không?"
+                        "Chào Arthur! Người bạn già của tôi, cuối cùng cậu cũng sang tới Hà Nội rồi. Mấy mươi năm từ ngày tốt nghiệp đại học ở Munich rồi nhỉ?",
+                        "Gió đông bắc 14 độ se lạnh thế này chắc cậu chưa quen. Chiều 29 Tết rồi, ngõ phố người ta bắt đầu tấp nập sắm sửa đón xuân rồi đấy.",
+                        "Trước hiên nhà tôi có cành đào phai vừa chớm nụ mập mạp đẹp lắm. Mắt tôi dạo này mờ rồi, cậu mang theo chiếc máy ảnh cơ kìa, ra chụp giúp tôi một kiểu ảnh làm kỷ niệm được không?"
                     };
                     DialogueManager.Instance.StartDialogue(speaker, state0Lines, () =>
                     {
-                        // Chuyển sang Trạng thái 1: Đã nhận việc từ Bác An
+                        // Chuyển sang Trạng thái 1: Bác An nhờ đi chụp ảnh cành đào phai
                         GameManager.Instance.SetQuestState(QuestState.QuestAccepted);
                     });
                     return;
@@ -154,8 +154,8 @@ public class NPCInteractable : MonoBehaviour
                 case QuestState.QuestAccepted:
                     string[] state1Lines = new string[]
                     {
-                        "Cành đào phai cánh hồng thắm ở ngay trước hiên nhà phía đông bắc đấy cháu Arthur.",
-                        "Cháu hãy bấm phím [Space] để mở ống kính máy ảnh, căn góc cây đào vào giữa khung rồi bấm chuột trái để chụp nhé!"
+                        "Cành đào phai cánh hồng thắm ở ngay trước khoảng sân hiên nhà phía đông bắc đấy Arthur.",
+                        "Cậu bấm phím [Space] để mở ống kính máy ảnh, cuộn con lăn chuột xoay vòng lấy nét [Focus Ring] cho cánh hoa thật rõ, căn theo lưới 1/3 rồi bấm chuột trái chụp nhé!"
                     };
                     DialogueManager.Instance.StartDialogue(speaker, state1Lines);
                     return;
@@ -163,25 +163,58 @@ public class NPCInteractable : MonoBehaviour
                 case QuestState.PhotoTaken:
                     string[] state2Lines = new string[]
                     {
-                        "A, Arthur! Cháu đã chụp được cành đào phai rồi đấy ư? Mau cho bác xem bức ảnh nào...",
-                        "(Bác An nâng niu ngắm nhìn bức ảnh cành đào phai vừa chụp)",
-                        "Ôi, bức ảnh cành đào phai đẹp và ấm áp quá! Từng cánh hoa phai rung rinh trong ánh nắng sớm mai... Bác cảm ơn cháu Arthur nhiều nhé!"
+                        "A, Arthur đã chụp được cành đào phai rồi đấy ư? Mau cho tôi xem bức ảnh nào...",
+                        "(Bác An cẩn thận đón lấy tấm ảnh polaroid, xúc động ngắm nghía từng nụ hoa phai e ấp trong nắng chiều)",
+                        "Ôi, bức ảnh có hồn quá Arthur ạ! Đúng là sắc đào phai của người Tràng An... Tôi cảm ơn cậu nhiều lắm!",
+                        "À này! Đào đã có trong nhà rồi, giờ phải đến Bánh Chưng thôi! Cậu lại manh chiếu bên hiên kia [Phím E], tôi sẽ chỉ cho cậu cách tự tay gói một chiếc bánh chưng vuông vắn ngày Tết nhé!"
                     };
                     DialogueManager.Instance.StartDialogue(speaker, state2Lines, () =>
                     {
-                        // Chuyển sang Trạng thái 3: Hoàn thành nhiệm vụ
-                        GameManager.Instance.SetQuestState(QuestState.Completed);
+                        // Chuyển sang Trạng thái 3: Mở khóa gói Bánh Chưng
+                        GameManager.Instance.SetQuestState(QuestState.BanhChungUnlocked);
                     });
                     return;
 
-                case QuestState.Completed:
+                case QuestState.BanhChungUnlocked:
                     string[] state3Lines = new string[]
                     {
-                        "Cảm ơn cháu lần nữa nhé Arthur. Nhờ bức ảnh của cháu mà mùa xuân này trong căn nhà nhỏ của bác ấm áp hơn hẳn.",
-                        "À cháu này! Bên hiên nhà bác có trải sẵn manh chiếu, lá dong, thúng nếp và thịt mỡ để gói Bánh Chưng đón Tết đấy.",
-                        "Cháu hãy lại chiếc chiếu cạnh bác rồi bấm [E] (hoặc bấm phím [B]) thử trổ tài gói một chiếc bánh chưng vuông vức xem sao nhé!"
+                        "Cậu lại manh chiếu cói bên hiên nhà [Phím E], trên mâm đã có đủ 3 nguyên liệu: lá dong xanh mướt, thúng nếp cái hoa vàng và thịt ba chỉ ướp tiêu.",
+                        "Nhớ kéo thả theo đúng thứ tự phong tục nhé: lót lá dong trước, rải nếp, rồi đặt miếng nhân thịt mỡ vào giữa lòng bánh!"
                     };
                     DialogueManager.Instance.StartDialogue(speaker, state3Lines);
+                    return;
+
+                case QuestState.BanhChungWrapped:
+                    string[] state4Lines = new string[]
+                    {
+                        "Khéo tay lắm Arthur! Chiếc bánh chưng đầu tiên của cậu vuông vắn và buộc lạt chữ thập rất đều tay đấy.",
+                        "Cậu cất bánh vào túi đồ kỷ niệm đi. Giờ trời sập tối se lạnh rồi, tôi với cậu sẽ cùng ra góc sân nhóm bếp củi, canh nồi luộc bánh đêm 30 Tết [Phím E cạnh nồi luộc] nhé!"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state4Lines);
+                    return;
+
+                case QuestState.BanhChungBoiled:
+                    string[] state5Lines = new string[]
+                    {
+                        "Nồi bánh chưng đã chín thơm ngào ngạt khắp cả ngõ phố rồi Arthur ơi!",
+                        "(Bác An rót một chén trà sen tỏa khói nghi ngút trao cho Arthur)",
+                        "Cậu uống ngụm trà sen ấm này đi. Người Việt mình thức canh bánh không chỉ để bánh chín, mà để đợi nhau qua một năm vất vả...",
+                        "Gió bấc đang thổi từng cơn se sắt... Chỉ ít phút nữa là tiếng pháo hoa Giao thừa sẽ nổ vang trên bầu trời Hà Nội rồi đấy!"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state5Lines, () =>
+                    {
+                        // Chuyển sang Trạng thái 6: Sẵn sàng đón Giao Thừa
+                        GameManager.Instance.SetQuestState(QuestState.WaitingForMidnight);
+                    });
+                    return;
+
+                case QuestState.WaitingForMidnight:
+                    string[] state6Lines = new string[]
+                    {
+                        "Chỉ còn ít phút nữa là thời khắc chuyển giao năm mới 00:00 gõ cửa.",
+                        "Tôi đã dọn dẹp bàn thờ gia tiên tinh tươm rồi. Lát nữa pháo hoa nổ, tôi sẽ thắp nén nhang trầm đầu tiên cầu bình an cho tất cả chúng ta..."
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state6Lines);
                     return;
             }
         }

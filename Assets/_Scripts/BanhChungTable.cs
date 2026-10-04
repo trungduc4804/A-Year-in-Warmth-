@@ -69,9 +69,20 @@ public class BanhChungTable : MonoBehaviour
         {
             if (Input.GetKeyDown(interactionKey))
             {
-                if (minigame != null)
+                bool isUnlocked = GameManager.Instance == null || GameManager.Instance.CurrentQuestState >= QuestState.BanhChungUnlocked;
+                if (isUnlocked)
                 {
-                    minigame.OpenMinigame();
+                    if (minigame != null)
+                    {
+                        minigame.OpenMinigame();
+                    }
+                }
+                else
+                {
+                    if (GameManager.Instance != null)
+                    {
+                        GameManager.Instance.ShowToast("🌸 Cháu hãy chụp ảnh cành đào và nói chuyện với Bác An trước nhé!");
+                    }
                 }
             }
         }
@@ -103,7 +114,10 @@ public class BanhChungTable : MonoBehaviour
         float guiX = screenPos.x;
         float guiY = Screen.height - screenPos.y;
 
-        float bubbleW = 165f;
+        bool isUnlocked = GameManager.Instance == null || GameManager.Instance.CurrentQuestState >= QuestState.BanhChungUnlocked;
+        string promptText = isUnlocked ? $"🍱 [{interactionKey}] Gói Bánh Chưng" : "🌸 Chụp ảnh cành đào trước nhé";
+
+        float bubbleW = isUnlocked ? 175f : 215f;
         float bubbleH = 32f;
         Rect bubbleRect = new Rect(guiX - bubbleW * 0.5f, guiY - bubbleH * 0.5f, bubbleW, bubbleH);
 
@@ -118,7 +132,8 @@ public class BanhChungTable : MonoBehaviour
         GUI.DrawTexture(bubbleRect, promptBgTex);
 
         // Viền đỏ điều ngày Tết
-        GUI.color = new Color(0.85f, 0.28f, 0.22f, 1f);
+        Color borderColor = isUnlocked ? new Color(0.85f, 0.28f, 0.22f, 1f) : new Color(0.6f, 0.6f, 0.6f, 0.8f);
+        GUI.color = borderColor;
         GUI.DrawTexture(new Rect(bubbleRect.x, bubbleRect.y, bubbleRect.width, 1.5f), promptBgTex);
         GUI.DrawTexture(new Rect(bubbleRect.x, bubbleRect.yMax - 1.5f, bubbleRect.width, 1.5f), promptBgTex);
         GUI.DrawTexture(new Rect(bubbleRect.x, bubbleRect.y, 1.5f, bubbleRect.height), promptBgTex);
@@ -126,7 +141,6 @@ public class BanhChungTable : MonoBehaviour
 
         // Chữ nhắc nhở
         GUI.color = Color.white;
-        string promptText = $"🍱 [{interactionKey}] Gói Bánh Chưng";
         GUI.Label(bubbleRect, promptText, promptTextStyle);
 
         GUI.color = oldColor;

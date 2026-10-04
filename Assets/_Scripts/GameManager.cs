@@ -12,10 +12,14 @@ using UnityEngine;
 /// </summary>
 public enum QuestState
 {
-    NotStarted = 0,     // Trạng thái 0: Chưa nhận việc
-    QuestAccepted = 1,  // Trạng thái 1: Đã nhận việc từ Bác An (Chụp cành đào phai)
-    PhotoTaken = 2,     // Trạng thái 2: Đã chụp đúng cành đào phai
-    Completed = 3       // Trạng thái 3: Hoàn thành nhiệm vụ
+    NotStarted = 0,             // Trạng thái 0: Chưa nhận việc từ Bác An
+    QuestAccepted = 1,          // Trạng thái 1: Bác An nhờ đi chụp ảnh cành đào phai
+    PhotoTaken = 2,             // Trạng thái 2: Đã chụp được cành đào phai, về gặp Bác An
+    BanhChungUnlocked = 3,      // Trạng thái 3: Bác An mời lại chiếu gói Bánh Chưng
+    Completed = 3,              // Alias tương thích ngược cho BanhChungUnlocked
+    BanhChungWrapped = 4,       // Trạng thái 4: Đã gói xong bánh, ra sân canh nồi luộc
+    BanhChungBoiled = 5,        // Trạng thái 5: Đã luộc chín bánh, uống trà sen cùng Bác An
+    WaitingForMidnight = 6      // Trạng thái 6: Sắp bước vào thời khắc Giao Thừa (chuẩn bị The Perfect Shot)
 }
 
 [DisallowMultipleComponent]
@@ -122,16 +126,25 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case QuestState.NotStarted:
-                ShowToast("📜 Nhiệm vụ: Đang chờ bắt đầu...");
+                ShowToast("📜 Nhiệm vụ: Hãy lại gặp Bác An trước hiên nhà để trò chuyện.");
                 break;
             case QuestState.QuestAccepted:
-                ShowToast("🌸 [Nhiệm vụ Mới]: Hãy chụp ảnh Cành Đào Phai trước hiên nhà!");
+                ShowToast("🌸 [Nhiệm vụ Mới]: Dùng máy ảnh [Space] chụp Cành Đào Phai trước hiên nhà!");
                 break;
             case QuestState.PhotoTaken:
-                ShowToast("✨ [Mục Tiêu Hoàn Thành]: Đã lưu cành đào vào Album! Bấm [Tab] để xem.");
+                ShowToast("✨ [Đã Chụp Được Ảnh]: Hãy mang bức ảnh polaroid về đưa cho Bác An [Phím E]!");
                 break;
-            case QuestState.Completed:
-                ShowToast("🎉 [Hoàn Thành Nhiệm Vụ]: Bác An rất thích bức ảnh của bạn!");
+            case QuestState.BanhChungUnlocked:
+                ShowToast("🍱 [Nhiệm vụ Mới]: Lại manh chiếu bên hiên nhà [Phím E] để tự tay gói Bánh Chưng!");
+                break;
+            case QuestState.BanhChungWrapped:
+                ShowToast("🔥 [Nhiệm vụ Mới]: Ra góc sân bên hiên nhà [Phím E] cùng Bác An canh nồi luộc bánh đêm 30!");
+                break;
+            case QuestState.BanhChungBoiled:
+                ShowToast("🍵 [Bánh Đã Chín]: Hãy lại hiên nhà uống chén trà sen ấm cùng Bác An [Phím E]!");
+                break;
+            case QuestState.WaitingForMidnight:
+                ShowToast("🎆 [Đêm Giao Thừa]: Chuẩn bị đón thời khắc chuyển giao năm mới cùng Bác An!");
                 break;
         }
 
@@ -279,10 +292,11 @@ public class GameManager : MonoBehaviour
         Color oldColor = GUI.color;
 
         // 1. BẢNG THEO DÕI NHIỆM VỤ (QUEST TRACKER HUD) - Nằm ở góc trên bên phải (ẩn khi đang mở Minigame)
-        bool isMinigameOpen = BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen;
+        bool isMinigameOpen = (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen) ||
+                              (BanhChungBoilingMinigame.Instance != null && BanhChungBoilingMinigame.Instance.IsOpen);
         if (!isMinigameOpen)
         {
-            float hudW = 310f;
+            float hudW = 320f;
             float hudH = 100f;
             Rect hudRect = new Rect(Screen.width - hudW - 20f, 20f, hudW, hudH);
 
@@ -298,10 +312,11 @@ public class GameManager : MonoBehaviour
             GUI.color = new Color(0.85f, 0.72f, 0.45f, 0.95f);
             DrawFrameBorders(hudRect, 1.5f);
 
-            // Tiêu đề bảng nhiệm vụ
+            // Tiêu đề bảng nhiệm vụ kèm điểm Gắn kết Bản địa (Ấm Trà Sen)
+            string titleText = culturalAffinity > 0 ? $"🌸 NHIỆM VỤ TẾT • 🍵 {culturalAffinity} ĐIỂM GẮN KẾT" : "🌸 NHIỆM VỤ: TẾT NGUYÊN ĐÁN";
             GUI.color = Color.white;
             Rect titleRect = new Rect(hudRect.x + 12, hudRect.y + 8, hudRect.width - 24, 24);
-            GUI.Label(titleRect, "🌸 NHIỆM VỤ: MÙA ĐÀO PHAI", questTitleStyle);
+            GUI.Label(titleRect, titleText, questTitleStyle);
 
             // Nội dung mục tiêu hiện tại theo QuestState
             Rect descRect = new Rect(hudRect.x + 12, hudRect.y + 36, hudRect.width - 24, 56);
@@ -315,16 +330,28 @@ public class GameManager : MonoBehaviour
                     statusColor = new Color(0.85f, 0.85f, 0.85f, 1f);
                     break;
                 case QuestState.QuestAccepted:
-                    questStatusText = "• Bước 2: Dùng máy ảnh [Phím Space] chụp lại Cành Đào Phai trước hiên nhà [0/1].";
+                    questStatusText = "• Bước 2: Dùng máy ảnh [Space] chụp Cành Đào Phai trước hiên nhà [0/1].";
                     statusColor = new Color(1.0f, 0.85f, 0.45f, 1f);
                     break;
                 case QuestState.PhotoTaken:
                     questStatusText = "• Bước 3: Đã chụp được ảnh! Hãy mang về đưa cho Bác An [Phím E] [1/1].";
                     statusColor = new Color(0.55f, 0.95f, 0.65f, 1f);
                     break;
-                case QuestState.Completed:
-                    questStatusText = "• Hoàn thành: Bác An đã nhận được bức ảnh cành đào phai ấm áp. ✓";
+                case QuestState.BanhChungUnlocked:
+                    questStatusText = "• Bước 4: Lại manh chiếu bên hiên nhà [Phím E] để tự tay gói Bánh Chưng Tết.";
+                    statusColor = new Color(0.95f, 0.82f, 0.42f, 1f);
+                    break;
+                case QuestState.BanhChungWrapped:
+                    questStatusText = "• Bước 5: Ra góc sân [Phím E] cùng Bác An nhóm lửa canh nồi bánh đêm 30 Tết.";
+                    statusColor = new Color(0.95f, 0.55f, 0.25f, 1f);
+                    break;
+                case QuestState.BanhChungBoiled:
+                    questStatusText = "• Bước 6: Bánh chín thơm lừng! Lại hiên nhà uống trà sen cùng Bác An [Phím E].";
                     statusColor = new Color(0.45f, 0.85f, 1.0f, 1f);
+                    break;
+                case QuestState.WaitingForMidnight:
+                    questStatusText = "• Bước 7: Chuẩn bị máy ảnh [Space] đón thời khắc Giao Thừa 00:00 cùng Bác An.";
+                    statusColor = new Color(1.0f, 0.85f, 0.55f, 1f);
                     break;
             }
 

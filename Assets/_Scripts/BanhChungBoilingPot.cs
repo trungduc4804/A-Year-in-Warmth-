@@ -77,7 +77,7 @@ public class BanhChungBoilingPot : MonoBehaviour
             if (Input.GetKeyDown(interactionKey))
             {
                 // Kiểm tra xem đã gói bánh chưng ở Pha 1 chưa
-                bool hasWrapped = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
+                bool hasWrapped = (GameManager.Instance != null && (GameManager.Instance.BanhChungCount > 0 || GameManager.Instance.CurrentQuestState >= QuestState.BanhChungWrapped)) ||
                                   (wrapMinigame != null && wrapMinigame.HasCompletedAny);
 
                 if (hasWrapped)
@@ -130,7 +130,7 @@ public class BanhChungBoilingPot : MonoBehaviour
         float guiX = screenPos.x;
         float guiY = Screen.height - screenPos.y;
 
-        bool hasWrapped = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
+        bool hasWrapped = (GameManager.Instance != null && (GameManager.Instance.BanhChungCount > 0 || GameManager.Instance.CurrentQuestState >= QuestState.BanhChungWrapped)) ||
                           (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.HasCompletedAny);
 
         string promptText = hasWrapped
