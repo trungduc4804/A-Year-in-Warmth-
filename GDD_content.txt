@@ -1,0 +1,204 @@
+﻿GAME DESIGN DOCUMENT (GDD)
+Tên dự án: A Year in Warmth (Một Năm Bình Yên)
+Thể loại: Narrative Adventure / Cozy Exploration / Minigame Suite
+Góc nhìn: Top-Down 2D (Gameplay) kết hợp UI Sổ tay minh họa vẽ tay
+Nền tảng mục tiêu: PC (Steam), Nintendo Switch
+Nhãn độ tuổi: Everyone (PEGI 3 / ESRB E)
+Thời lượng trải nghiệm: 3.5 – 5 giờ chơi
+1. Executive Summary & Design Pillars
+1.1 Elevator Pitch
+A Year in Warmth đưa người chơi vào vai Arthur — một kỹ sư phần mềm 62 tuổi người châu Âu vừa nghỉ hưu. Rời xa màn hình máy tính sau bốn thập kỷ sống theo trật tự logic nghiêm ngặt, Arthur đến Việt Nam trong chuyến hành trình kéo dài một năm. Toàn bộ câu chuyện được tái hiện qua cuốn album kỷ niệm: mỗi bức tranh màu nước mở ra một chương ký ức bằng đồ họa pixel art rực rỡ, nơi người chơi trải nghiệm bốn lễ hội truyền thống lớn tương ứng với bốn mùa, tìm kiếm sự gắn kết con người và bình yên nội tâm.
+1.2 Trụ cột thiết kế (Design Pillars)
+Pillar 1: Culture as Interaction, Not Lecture (Văn hóa là trải nghiệm, không giáo điều): Không bắt người chơi đọc các bức tường văn bản (walls of text). Bản sắc văn hóa được truyền tải qua thao tác đôi tay (gói bánh, gọt tre, giữ nhịp chèo, căn lực ném).
+Pillar 2: Emotional Contrast (Sự dung hòa giữa hai cực): Đối lập giữa tư duy giải thuật nhị phân, quy tắc chuẩn chỉ của Arthur với nhịp sống ngẫu hứng, ấm áp, giàu tình cảm cộng đồng của người Việt.
+Pillar 3: Tactile Nostalgia (Cảm giác xúc giác và hoài niệm): Mọi hành động trong thế giới pixel đều hướng về mục tiêu hoàn thiện cuốn album ký ức ngoài đời thực: dán tem, ghim lá khô, viết nhật ký dạng pseudocode và chụp lại bức ảnh đắt giá nhất.
+2. Cốt truyện, Nhân vật & Thế giới
+2.1 Tuyến nhân vật
+Arthur (62 tuổi) – Nhân vật chính:
+Tiểu sử: Cựu Senior Software Architect tại Munich. Vừa nghỉ hưu, độc thân, quen phân tích mọi thứ qua dữ liệu và quy luật.
+Tâm lý ban đầu: Dè dặt, cảm thấy quá tải trước sự hỗn loạn của giao thông và âm thanh đường phố.
+Hành trình phát triển: Mở lòng dần qua từng mùa, học cách chấp nhận sự bất toàn và tìm thấy ý nghĩa cuộc sống ngoài công việc.
+Bác An (Hà Nội – Chương Xuân): Bạn học cũ thời đại học tại châu Âu của Arthur. Điềm đạm, ấm cúng, am hiểu văn hóa Tràng An.
+Anh Ba Đạt (Sóc Trăng – Chương Hạ): Đội trưởng đội đua ghe Ngo. Hào sảng, da cháy nắng, giọng nói sang sảng, coi dòng sông như máu thịt.
+Bé Bống (Hội An – Chương Thu): Cô bé 9 tuổi, con chủ quán trọ. Tinh nghịch, thích gấp giấy và luôn tò mò về thế giới bên ngoài.
+Cụ Mùa (Bản Liền – Chương Đông): Nghệ nhân dệt thổ cẩm và làm quả còn người Tày. Ít nói tiếng phổ thông nhưng giao tiếp qua ánh mắt, nụ cười và chén trà Shan Tuyết.
+3. Hệ thống Gameplay & Cơ chế cốt lõi
+3.1 Sơ đồ vòng lặp lõi (Core Gameplay Loop)
++-------------------------------------------------------------------+
+| 1. ALBUM METAGAME (Tranh vẽ tay màu nước)                        |
+|    - Chọn chương, đọc ghi chú mã nguồn giả (Pseudocode)           |
++---------------------------------+---------------------------------+
+                                  | Nhấn vào bức ảnh
+                                  v
++-------------------------------------------------------------------+
+| 2. KHÁM PHÁ & NHIỆM VỤ (2D Top-Down Pixel Art)                    |
+|    - Di chuyển, trò chuyện với cư dân, thu thập vật phẩm          |
+|    - Tăng chỉ số Cultural Affinity qua các tương tác lịch thiệp  |
++---------------------------------+---------------------------------+
+                                  | Đủ điều kiện lễ hội
+                                  v
++-------------------------------------------------------------------+
+| 3. MINIGAME CAO TRÀO (Cơ chế xúc giác)                           |
+|    - Nấu bánh, chèo thuyền nhịp điệu, làm đèn, ném còn            |
++---------------------------------+---------------------------------+
+                                  | Đạt đỉnh điểm cảm xúc
+                                  v
++-------------------------------------------------------------------+
+| 4. THE PERFECT SHOT (Cơ chế máy ảnh phim)                         |
+|    - Căn góc, lấy nét, bắt trọn khoảnh khắc vàng                  |
+|    - Freeze frame chuyển hóa từ Pixel Art sang Tranh vẽ tay       |
++---------------------------------+---------------------------------+
+                                  |
+                                  +--> Cập nhật trang Album hoàn chỉnh
+3.2 Cơ chế Máy ảnh cơ (Analog Camera Viewfinder)
+Kích hoạt: Bấm phím chuyên dụng (Phím Cách hoặc R-Trigger). Màn hình phủ khung ngắm máy ảnh phim với tỉ lệ 3:2, hạt nhiễu film grain nhẹ.
+Hệ thống điều khiển:
+Pan/Tilt: Di chuyển ống kính quanh khung cảnh.
+Focus Ring: Thanh trượt bên phải; người chơi cuộn con lăn chuột hoặc nút gạt để chỉnh độ mờ/rõ.
+Composition Grid: Lưới tỉ lệ 1/3 (Rule of Thirds) hiển thị mờ.
+Hệ thống đánh giá khoảnh khắc (Snapshot Scoring):
+Game nhận diện điểm neo (Hotspots) trên khung hình: nhân vật cười, ngọn lửa bùng lên, mái chèo vung lên đỉnh điểm.
+Khi căn đúng tiêu cự (Focus) và điểm neo nằm trên giao điểm lưới 1/3, nút chụp sẽ phát sáng biểu thị "Golden Frame".
+3.3 Chỉ số Gắn kết Bản địa (Cultural Affinity Meter)
+Biểu tượng một ấm trà sen nhỏ ở góc UI. Ấm trà đầy dần khi Arthur:
+Nếm thử các món ăn lạ mà không chần chừ (thịt kho hột vịt, bánh xèo, cốm dẹp).
+Lựa chọn phản hồi tôn trọng phong tục (cúi đầu chào, nhận đồ bằng hai tay).
+Lắng nghe trọn vẹn các câu chuyện kể của NPC cao tuổi.
+Phần thưởng: Mở khóa các kỷ vật bí mật (tem thư cổ, chiếc lá bồ đề ép khô, hoa đào sấy) để trang trí thêm cho trang album.
+4. Thiết kế chi tiết 4 Chương Lễ Hội
+4.1 Chương 1: Mùa Xuân – Tết Nguyên Đán (Hà Nội)
+[Bắt đầu: Ga Hà Nội mờ sương] 
+       --> [Phố cổ Hàng Bè: Tìm lá dong, chọn cành đào] 
+       --> [Sân nhà Bác An: Xếp bánh chưng] 
+       --> [Đêm 30 Tết: Canh nồi bánh bên bếp củi] 
+       --> [Giao thừa: Chụp ảnh Bác An thắp nhang]
+Bối cảnh: Ngõ gạch rêu phong phố cổ Hà Nội, mưa phùn mùa xuân, tiếng còi xe máy xen lẫn tiếng rao bánh mì, mùi nhang bài thơm dịu.
+Nhiệm vụ chuẩn bị:
+Phiên chợ 29 Tết: Arthur cầm danh sách viết tay của Bác An ra chợ Hàng Bè. Người chơi phải phân biệt giữa lá chuối và lá dong bản to; chọn cành đào nhiều dăm, nụ mập thay vì cành hoa đã nở bung.
+Bài học ngũ quả: Xếp mâm ngũ quả lên bàn thờ theo gợi ý câu đối dân gian.
+Minigame: Gói Bánh Chưng & Canh Lửa
+Pha 1 (Gói bánh): Kéo thả lá dong vào khuôn gỗ theo quy tắc 2 lá úp (mặt xanh tiếp xúc nếp) - 2 lá ngửa. Lần lượt đổ nếp cái hoa vàng, rải đậu xanh đã đồ chín, đặt miếng thịt ba chỉ ướp tiêu đen thơm lồng, phủ nếp kín và gập mép. Dùng ngón tay ảo giữ mép và buộc lạt chéo đôi.
+Pha 2 (Canh nồi luộc): Đêm 30 se lạnh, Arthur ngồi bên nồi nước sôi sùng sục. Người chơi quản lý hai thanh trạng thái: Nhiệt độ (thêm củi khô khi lửa tàn) và Mực nước (châm thêm nước sôi khi nước cạn). Xen kẽ là các đoạn tự sự của Arthur về sự cô đơn ở trời Âu đối lập với sự sum vầy quanh bếp lửa.
+The Perfect Shot: Đúng 00:00 Giao thừa, tiếng pháo hoa nổ vang trên bầu trời hồ Gươm, Arthur chụp khoảnh khắc Bác An mỉm cười chắp tay trước bàn thờ gia tiên, làn khói nhang trầm bay mờ ảo quanh khung ảnh tổ tiên.
+Kỷ vật dán sổ: Phong bao lì xì đỏ có chữ "Bình An" do Bác An trao tặng.
+4.2 Chương 2: Mùa Hạ – Lễ Hội Đua Ghe Ngo / Oóc Om Bóc (Sóc Trăng)
+[Chùa Dơi: Khắc họa tiết rồng Naga] 
+       --> [Bờ sông Maspero: Khởi động cùng đội chèo] 
+       --> [Cuộc đua: Minigame gõ nhịp mái chèo] 
+       --> [Ăn mừng: Giã cốm dẹp & Chụp ảnh chiến thắng]
+Bối cảnh: Dòng sông Maspero rực nắng hè, hai bên bờ rợp bóng dừa nước, tiếng cồng chiêng ngũ âm (Pinpeat) dồn dập, sắc cờ phướn Khmer rực rỡ.
+Nhiệm vụ chuẩn bị:
+Điểm nhãn Thần Thuyền: Arthur phụ anh Ba Đạt dùng cọ sơn họa tiết vảy rồng và vẽ đôi mắt cho mũi ghe Ngo độc mộc dài 30m.
+Trộn Cốm Dẹp: Giã nếp non trong cối đá cùng thanh niên trong phum sóc, trộn dừa nạo và nước đường thốt nốt.
+Minigame: Nhịp Chèo Thần Tốc (Rhythm & Synchronization)
+Cơ chế: Arthur ngồi ở khoang giữa thuyền cùng 50 tay chèo. Trên mũi thuyền, đội trưởng thổi còi và gõ cồng nhịp điệu: Tùng... Chát... Tùng Tùng Chát.
+Một vòng tròn co giãn (Hit circle) xuất hiện ở tâm màn hình. Người chơi bấm phím đúng thời điểm vòng tròn chạm vạch:
+Perfect: Mái chèo cắm sâu xuống nước, con thuyền lướt mạnh về phía trước, bọt nước tung trắng xóa.
+Miss: Mái chèo đập vào mái chèo của đồng đội bên cạnh, làm thuyền khựng lại và thanh thể lực tập thể bị sụt giảm.
+Đoạn nước rút 100m cuối cùng yêu cầu tốc độ gõ phím tăng gấp đôi trong tiếng hò reo vang dội bờ sông.
+The Perfect Shot: Khoảnh khắc mũi ghe cán vạch đích, 50 tay chèo đồng loạt vung mái chèo lên trời, những giọt nước sông lấp lánh dưới ánh nắng hè hòa cùng nụ cười rạng rỡ của anh Ba Đạt.
+Kỷ vật dán sổ: Một nắm cốm dẹp bọc lá chuối khô và chiếc vòng chỉ đỏ chúc phúc của vị sư cả chùa Khmer.
+4.3 Chương 3: Mùa Thu – Tết Trung Thu (Hội An)
+[Phố cổ hoàng hôn: Tìm vật liệu làm lồng đèn] 
+       --> [Sân hiên quán trọ: Vót tre, căng giấy kiếng] 
+       --> [Đêm rằm tắt đèn: Gõ trống theo đoàn múa Lân] 
+       --> [Bến sông Hoài: Thả hoa đăng cầu bình an]
+Bối cảnh: Phố cổ Hội An lúc chập tối. Toàn bộ đèn điện thị xã đồng loạt phụt tắt, nhường chỗ cho hàng ngàn chiếc đèn lồng lụa, đèn hoa giấy sáng rực đôi bờ sông Hoài.
+Nhiệm vụ chuẩn bị:
+Tìm kiếm vật liệu: Arthur đi qua các ngõ hẹp để xin thợ thủ công những thanh tre già đã ngâm nước đủ ngày, hồ dán nấu từ bột gạo và giấy kiếng đỏ/vàng truyền thống.
+Bày mâm cỗ trông trăng: Giúp mẹ bé Bống bóc bưởi tỉa hình chú chó lông xù, xếp bánh nướng cá chép lên đĩa gốm.
+Minigame: Chế Tác Đèn Ông Sao & Đánh Trống Múa Lân
+Pha 1 (Chế tác đèn): Người chơi dùng chuột/tay cầm uốn 10 thanh tre thành 2 ngôi sao năm cánh, buộc dây kẽm cố định ở các đỉnh. Dùng que chống tách hai mặt sao để tạo độ phồng không gian ba chiều. Cắt giấy kiếng và phết hồ dán kín các mặt sao cho căng phẳng, không bị chùng.
+Pha 2 (Đoàn Lân nhộn nhịp): Đoàn múa Lân đi qua ngõ trọ. Arthur được giao chiếc trống cơm nhỏ. Người chơi gõ theo các tiết tấu: Thùng thình thùng thình để phối hợp với động tác Lân nhảy chồm, lắc đầu và nhả lộc chúc Tết các gia đình.
+The Perfect Shot: Tại bậc thềm bến thuyền sông Hoài, bé Bống hai tay nâng chiếc đèn hoa đăng sen giấy thả nhẹ xuống dòng sông, ánh nến lung linh phản chiếu trên gương mặt ngây thơ và chiếc đèn ông sao đỏ rực cầm bên tay kia.
+Kỷ vật dán sổ: Mảnh giấy kiếng màu đỏ hình ngôi sao và chiếc cuống vé vào phố cổ đã sờn mép.
+4.4 Chương 4: Mùa Đông – Mùa Gặt & Hội Lồng Tồng (Bản Liền, Lào Cai)
+[Nhà sàn trong sương: Sao chè Shan Tuyết] 
+       --> [Hiên nhà: Khâu quả còn ngũ sắc] 
+       --> [Bãi hội thung lũng: Minigame ném còn qua vòng nhật nguyệt] 
+       --> [Bữa cơm cộng đồng: Chụp ảnh kỷ niệm chia tay]
+Bối cảnh: Thung lũng ruộng bậc thang Bản Liền trong mùa đông. Khói lam chiều bảng lảng quyện vào sương mù, sắc chàm thẫm của áo chàm người Tày nổi bật trên nền rơm rạ mùa gặt vàng óng.
+Nhiệm vụ chuẩn bị:
+Hương vị chè cổ thụ: Arthur cùng già bản nhóm bếp lửa củi sao những búp chè Shan Tuyết phủ lông tơ trắng muốt, học cách hãm trà và thưởng thức vị chát ngọt sâu nơi cuống họng.
+Khâu Quả Còn ngũ sắc: Xếp các miếng vải chàm, đỏ, vàng thành hình chóp vuông. Dùng thìa gỗ nhồi hạt bông và hạt thóc chắc mẩy vào ruột túi, đính các dải tua rua tượng trưng cho tia nắng mùa xuân.
+Minigame: Ném Còn Cầu Mùa (Physics-based Parabolic Throw)
+Cơ chế: Giữa bãi đất phẳng dựng một thân tre mai cao vút (khoảng 20m), trên đỉnh treo vòng tròn bọc giấy hồng điều (tượng trưng cho Mặt Trăng/Mặt Trời).
+Arthur cầm dây quả còn quay tròn tạo đà. Giao diện hiển thị:
+Vector lực: Độ dài mũi tên biến động theo nhịp giữ nút.
+Góc phóng: Cần điều chỉnh theo góc nghiêng hình parabol.
+Độ lệch gió: Gió thung lũng thổi ngẫu nhiên làm dạt quỹ đạo bay.
+Mục tiêu: Phóng quả còn bay xuyên qua tâm vòng giấy tròn trên đỉnh cột. Khi quả còn xé rách giấy bay qua, pháo hoa đất nổ tung và tiếng reo hò chúc phúc mùa màng vang vọng khắp thung lũng.
+The Perfect Shot: Khung hình hẹn giờ chụp toàn cảnh: Arthur đứng giữa sân nhà sàn, vòng tay ôm vai Bác An (đã lặn lội lên thăm), Cụ Mùa, bé Bống và những người dân bản địa, tất cả cùng nâng chén rượu ngô mỉm cười trong làn khói bếp chiều đông.
+Kỷ vật dán sổ: Quả còn nhỏ đính tua vải ngũ sắc và chiếc cuống vé máy bay khứ hồi về châu Âu.
+5. Phong cách Mỹ thuật, Giao diện & Âm thanh
+5.1 Định hướng thẩm mỹ (Art Direction)
+Phong cách Hybrid độc đáo:
+Trang Album (Meta Layer): Tranh minh họa màu nước vẽ tay truyền thống (Hand-drawn Watercolour). Nét viền bằng mực bút sắt mềm mại, chất liệu giấy sần thô mộc hạt nhung (Cold-pressed paper texture).
+Thế giới Ký ức (Gameplay Layer): 2D Top-Down Pixel Art chuẩn 320x180 resolution nội tại, scale mượt mà lên màn hình 1080p ( Pixel Perfect).
+Bảng màu theo mùa (Seasonal Color Script):
+Xuân (Hà Nội): Xám rêu tường cổ, xanh lục lá dong, hồng phai hoa đào, đỏ câu đối.
+Hạ (Sóc Trăng): Vàng chanh nắng nhiệt đới, xanh ngọc sông nước, vàng nghệ vảy rồng.
+Thu (Hội An): Nâu trầm mái ngói âm dương, vàng hoàng yến hoa đăng, tím sẫm hoàng hôn.
+Đông (Bản Liền): Xanh chàm đậm thổ cẩm, trắng sữa sương mù, vàng rơm nếp nương.
+5.2 Thiết kế Giao diện UI (User Interface)
++-------------------------------------------------------------------+
+| [Bìa da thuộc sờn nâu]          Cuốn Album Ký Ức                  |
+|                                                                   |
+|  +-------------------------+   // Memory_01.cpp                   |
+|  |                         |   void Tet_Nguyen_Dan() {            |
+|  |     [Tranh màu nước]    |       heart.warmth += family;        |
+|  |                         |       worries.clear();               |
+|  |    Chợ hoa Hàng Bè      |   }                                  |
+|  +-------------------------+   "Mưa phùn lạnh, nhưng bên nồi củi |
+|      [Kẹp ảnh: Bao Lì Xì]       chưa bao giờ thấy ấm đến thế."   |
+|                                                                   |
+| [Nút lật trang]                                   [Nhấn để bước vào]
++-------------------------------------------------------------------+
+Toàn bộ UI menu chính nằm gọn trong cuốn sổ lữ hành bọc da của Arthur.
+Cột ghi chú bên phải bức ảnh là những dòng mã nguồn giả (Pseudocode) viết bằng bút mực, phản ánh sự biến chuyển trong cách Arthur nhìn nhận cuộc đời qua lăng kính lập trình viên.
+5.3 Thiết kế Âm thanh & Âm nhạc (Audio Landscape)
+Foley & Ambience (Yếu tố tạo hồn cho game):
+Tiếng rao "Ai bánh chưng bánh giò đê" vẳng xa trong ngõ phố tĩnh mịch.
+Tiếng lách tách của củi nổ trong đêm lạnh và tiếng nước sôi sùng sục của nồi bánh.
+Tiếng sóng vỗ mạn thuyền hòa cùng tiếng thở dốc đồng thanh của các tay bơi sông nước.
+Tiếng ve râm ran trưa hè và tiếng gió xào xạc luồn qua ruộng bậc thang.
+Âm nhạc (Soundtrack):
+Kết hợp mộc mạc giữa nhạc cụ giao hưởng phương Tây (Cello, Piano biểu đạt cho sự cô đơn của Arthur) với nhạc cụ truyền thống Việt Nam (Đàn Tranh, Sáo Trúc, Đàn Bầu, Nhạc cụ ngũ âm Khmer biểu đạt cho sự bao bọc của văn hóa bản địa).
+Tiếng đàn Cello ban đầu chơi đơn điệu, về các chương sau dần hòa quyện hoàn toàn vào các giai điệu ngũ cung dân ca.
+6. Kiến trúc Kỹ thuật & Ngăn xếp Công nghệ (Tech Stack)
+6.1 Công nghệ cốt lõi
+Engine: Unity (phiên bản ổn định dài hạn LTS) sử dụng Universal Render Pipeline (URP).
+Package 2D tích hợp:
+2D Tilemap Extras: Xử lý Rule Tiles tự động nối tường ngõ phố, mặt nước sông ngòi.
+2D Lights & Shadows: Tạo ánh sáng đổ bóng động từ nguồn nến hoa đăng, lửa củi và đèn lồng phố cổ.
+Pixel Perfect Camera: Đảm bảo không bị méo pixel (pixel bleeding/jittering) khi di chuyển camera.
+Hệ thống hội thoại: Yarn Spinner tích hợp mượt với Unity, giúp quản lý phân nhánh kịch bản và sự kiện kích hoạt minigame độc lập với code hệ thống.
+6.2 Cấu trúc Quản lý Dữ liệu (Save & Memory System)
+Quản lý trạng thái trò chơi qua mẫu thiết kế ScriptableObject Architecture:
+ChapterData: Lưu trạng thái hoàn thành nhiệm vụ, điểm Affinity đạt được.
+AlbumPageData: Lưu Texture ảnh chụp của người chơi (dạng byte array nén PNG), danh sách vật phẩm kỷ niệm đã mở khóa.
+7. Kế hoạch Sản xuất & Dự toán Ngân sách (Scope & Milestones)
+Dự án được thiết kế cho một nhóm độc lập nhỏ (Indie Core Team gồm 4 nhân sự) triển khai trong vòng 15 tháng.
++---------------------------------------------------------------------------------------+
+| Tháng 1 - 3: Pre-Production   | Prototype Core Loop + Shader chuyển cảnh + Test Camera|
+| Tháng 4 - 6: Vertical Slice   | Hoàn thiện trọn vẹn Chương 1 (Tết Hà Nội)              |
+| Tháng 7 - 12: Production      | Sản xuất liên tục Chương 2, 3, 4                      |
+| Tháng 13 - 15: QA & Launch    | Localization đa ngôn ngữ, Tối ưu hóa, Ra mắt Steam   |
++---------------------------------------------------------------------------------------+
+Chi tiết các mốc sản xuất (Milestones)
+Mốc 1: Pre-Production (Tháng 1 – Tháng 3):
+Lập trình bộ khung di chuyển nhân vật 8 hướng mượt mà.
+Viết Custom Shader chuyển cảnh (Dissolve từ Texture tranh nước sang Sprite Pixelate).
+Làm bản mẫu thô (Greybox prototype) minigame Gói bánh chưng và cơ chế ngắm chụp ảnh.
+Mốc 2: Vertical Slice (Tháng 4 – Tháng 6):
+Vẽ trọn bộ Assets pixel ngõ phố cổ Hà Nội, nội thất nhà Bác An.
+Hoàn thiện kịch bản chi tiết, tích hợp âm thanh foley thực địa cho Chương 1.
+Đóng gói bản Demo chơi thử 30 phút gửi tới các cộng đồng game kể chuyện quốc tế để kiểm tra độ hấp dẫn.
+Mốc 3: Full Production (Tháng 7 – Tháng 12):
+Tháng 7 – 8: Hoàn thành Chương 2 (Đua ghe Ngo Sóc Trăng - hệ thống minigame nhịp điệu).
+Tháng 9 – 10: Hoàn thành Chương 3 (Hội An - minigame ghép nan tre làm đèn, ánh sáng 2D đèn lồng).
+Tháng 11 – 12: Hoàn thành Chương 4 (Bản Liền - minigame ném còn vật lý, cảnh kết thúc toàn bộ album).
+Mốc 4: Polish, QA & Localization (Tháng 13 – Tháng 15):
+Bản địa hóa ngôn ngữ: Bản tiếng Anh chuẩn văn phong bản xứ; bổ sung tiếng Pháp, Đức và tiếng Việt chuẩn ngữ nghĩa.
+Kiểm thử tương thích tay cầm (Gamepad Mapping) hoàn chỉnh cho Steam Deck và Nintendo Switch.
+Chuẩn bị trang bán hàng Steam Storefront, cắt Trailer gameplay và tham gia sự kiện Steam Next Fest.

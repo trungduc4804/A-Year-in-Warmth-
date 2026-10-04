@@ -278,7 +278,8 @@ public class PlayerController : MonoBehaviour
             isInputLocked = false;
         }
 
-        bool isMinigameOpen = BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen;
+        bool isMinigameOpen = (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen) ||
+                              (BanhChungBoilingMinigame.Instance != null && BanhChungBoilingMinigame.Instance.IsOpen);
         if (isInputLocked || isMinigameOpen)
         {
             inputVector = Vector2.zero;
@@ -586,7 +587,8 @@ public class PlayerController : MonoBehaviour
         GUILayout.Label("🌿 A Year in Warmth - Character Controller", headerStyle);
         GUILayout.Space(4);
 
-        string paceState = (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen) ? "Đang gói bánh chưng ngày Tết" :
+        string paceState = (BanhChungBoilingMinigame.Instance != null && BanhChungBoilingMinigame.Instance.IsOpen) ? "Đang canh nồi bánh chưng đêm 30 Tết" :
+                           (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.IsOpen) ? "Đang gói bánh chưng ngày Tết" :
                            (AlbumUIController.Instance != null && AlbumUIController.Instance.IsOpen) ? "Đang mở Cuốn Album Kỷ Niệm" :
                            (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueActive) ? "Đang trò chuyện cùng NPC" :
                            isInputLocked ? "Đang ngắm máy ảnh (Viewfinder Mode)" :

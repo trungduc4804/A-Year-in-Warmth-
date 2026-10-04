@@ -138,15 +138,23 @@ public class GameManager : MonoBehaviour
         Debug.Log($"[GameManager] 🚩 Trạng thái nhiệm vụ chuyển sang: {newState}");
     }
 
-    [Header("=== TÚI ĐỒ KỶ NIỆM (INVENTORY) ===")]
+    [Header("=== TÚI ĐỒ KỶ NIỆM (INVENTORY) & GẮN KẾT BẢN ĐỊA ===")]
     [Tooltip("Số lượng Bánh Chưng Tết Arthur đã tự tay gói và thu hoạch được.")]
     public int banhChungCount = 0;
 
     [Tooltip("Đã mở khóa mẩu ghi chú kỷ niệm gói bánh chưng trong Cuốn Album.")]
     public bool hasBanhChungKeepsake = false;
 
+    [Tooltip("Đã hoàn thành canh chín nồi luộc bánh chưng đêm 30 Tết.")]
+    public bool hasBoiledBanhChung = false;
+
+    [Tooltip("Chỉ số Gắn kết Bản địa (Cultural Affinity Meter - Biểu tượng Ấm Trà Sen).")]
+    public int culturalAffinity = 0;
+
     public int BanhChungCount => banhChungCount;
     public bool HasBanhChungKeepsake => hasBanhChungKeepsake;
+    public bool HasBoiledBanhChung => hasBoiledBanhChung;
+    public int CulturalAffinity => culturalAffinity;
 
     /// <summary>
     /// Thu hoạch phần thưởng: Nhận 1 chiếc Bánh Chưng hoàn chỉnh vào túi đồ
@@ -155,6 +163,7 @@ public class GameManager : MonoBehaviour
     {
         banhChungCount++;
         hasBanhChungKeepsake = true;
+        AddCulturalAffinity(15);
         ShowToast($"🍱 [THU HOẠCH]: +1 Chiếc Bánh Chưng Tết! (Túi đồ: {banhChungCount} chiếc) ✓");
         PlayQuestSound();
 
@@ -162,6 +171,32 @@ public class GameManager : MonoBehaviour
         {
             AlbumUIController.Instance.RefreshAlbumData();
         }
+    }
+
+    /// <summary>
+    /// Hoàn thành Pha 2: Canh chín nồi luộc bánh chưng đêm 30 Tết
+    /// </summary>
+    public void CompleteBanhChungBoiling()
+    {
+        hasBoiledBanhChung = true;
+        AddCulturalAffinity(30);
+        ShowToast("🍲 [KỶ NIỆM ĐÊM 30]: Nồi Bánh Chưng đã chín thơm lừng! (+30 Điểm Gắn Kết) ✓");
+        PlayQuestSound();
+
+        if (AlbumUIController.Instance != null)
+        {
+            AlbumUIController.Instance.RefreshAlbumData();
+        }
+    }
+
+    /// <summary>
+    /// Tăng điểm Gắn kết Bản địa (Cultural Affinity)
+    /// </summary>
+    public void AddCulturalAffinity(int points)
+    {
+        if (points <= 0) return;
+        culturalAffinity += points;
+        Debug.Log($"[GameManager] 🍵 Cultural Affinity tăng +{points} (Tổng: {culturalAffinity})");
     }
 
     /// <summary>

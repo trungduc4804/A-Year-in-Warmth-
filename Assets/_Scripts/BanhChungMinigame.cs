@@ -695,13 +695,24 @@ public class BanhChungMinigame : MonoBehaviour
         Rect detailR = new Rect(modalRect.x + 16, titleR.yMax + 4, modalRect.width - 32, 42);
         GUI.Label(detailR, detailText, feedbackStyle);
 
-        // 3 nút thao tác
-        float btnW = (modalRect.width - 32f - 20f) / 3f;
+        // 4 nút thao tác
+        float btnW = (modalRect.width - 32f - 30f) / 4f;
         float btnH = 32f;
         float btnY = modalRect.yMax - btnH - 12f;
 
-        // Nút 1: Mở Cuốn Album ngay
-        Rect albumBtn = new Rect(modalRect.x + 16, btnY, btnW, btnH);
+        // Nút 1: Ra sân Canh Nồi Luộc Đêm 30 Tết (Pha 2)
+        Rect boilBtn = new Rect(modalRect.x + 16, btnY, btnW, btnH);
+        if (GUI.Button(boilBtn, "🔥 Canh Nồi Đêm 30"))
+        {
+            CloseMinigame();
+            if (BanhChungBoilingMinigame.Instance != null)
+            {
+                BanhChungBoilingMinigame.Instance.OpenMinigame();
+            }
+        }
+
+        // Nút 2: Mở Cuốn Album ngay
+        Rect albumBtn = new Rect(boilBtn.xMax + 10, btnY, btnW, btnH);
         if (GUI.Button(albumBtn, "📖 Mở Album (Tab)"))
         {
             CloseMinigame();
@@ -712,14 +723,14 @@ public class BanhChungMinigame : MonoBehaviour
             }
         }
 
-        // Nút 2: Gói thêm chiếc nữa
+        // Nút 3: Gói thêm chiếc nữa
         Rect wrapAgainBtn = new Rect(albumBtn.xMax + 10, btnY, btnW, btnH);
-        if (GUI.Button(wrapAgainBtn, "✨ Gói Thêm Nữa"))
+        if (GUI.Button(wrapAgainBtn, "✨ Gói Thêm"))
         {
             ResetMold();
         }
 
-        // Nút 3: Cất vào túi & Dạo cảnh
+        // Nút 4: Cất vào túi & Dạo cảnh
         Rect continueBtn = new Rect(wrapAgainBtn.xMax + 10, btnY, btnW, btnH);
         if (GUI.Button(continueBtn, "✕ Cất Vào Túi"))
         {

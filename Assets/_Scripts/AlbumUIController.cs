@@ -361,9 +361,20 @@ public class AlbumUIController : MonoBehaviour
                 }
 
             case 1:
+                bool hasBoiled = (GameManager.Instance != null && GameManager.Instance.HasBoiledBanhChung) ||
+                                 (BanhChungBoilingMinigame.Instance != null && BanhChungBoilingMinigame.Instance.HasCompleted);
                 bool hasWrapped = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
                                   (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.HasCompletedAny);
-                if (hasWrapped)
+
+                if (hasBoiled)
+                {
+                    int count = GameManager.Instance != null ? GameManager.Instance.BanhChungCount : 1;
+                    return "Hà Nội, đêm 30 Tết bên nồi bánh chưng nghi ngút khói.\n" +
+                           "Gió đông bắc luồn qua ngõ rêu, nhưng ngồi bên bếp củi than hồng, đôi tay già nua của mình chưa bao giờ thấy ấm áp đến thế.\n" +
+                           $"Từng thanh củi khô cời vào bếp, từng ấm nước sôi châm thêm... Sau nhiều giờ canh lửa, mẻ bánh chưng ({count} chiếc) đã chín thơm lừng khắp góc sân! " +
+                           "Bác An bưng ra chén trà sen ấm, nụ cười hiền hậu báo hiệu một mùa xuân mới an lành đã thực sự cận kề.";
+                }
+                else if (hasWrapped)
                 {
                     int count = GameManager.Instance != null ? GameManager.Instance.BanhChungCount : 1;
                     return "Hà Nội, đêm 29 Tết bên bếp lửa hồng.\n" +
@@ -402,9 +413,23 @@ public class AlbumUIController : MonoBehaviour
                        "Heart.Save(peachBlossom);";
 
             case 1:
-                bool hasWrapped = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
-                                  (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.HasCompletedAny);
-                if (hasWrapped)
+                bool hasBoiledCode = (GameManager.Instance != null && GameManager.Instance.HasBoiledBanhChung) ||
+                                     (BanhChungBoilingMinigame.Instance != null && BanhChungBoilingMinigame.Instance.HasCompleted);
+                bool hasWrappedCode = (GameManager.Instance != null && GameManager.Instance.BanhChungCount > 0) ||
+                                      (BanhChungMinigame.Instance != null && BanhChungMinigame.Instance.HasCompletedAny);
+
+                if (hasBoiledCode)
+                {
+                    return "// Memory_01.cpp - Hanoi Tet Night\n" +
+                           "void Tet_Nguyen_Dan() {\n" +
+                           "    Heart.Warmth += WoodFire.Embers;\n" +
+                           "    Heart.Peace += BacAn.LotusTea;\n" +
+                           "    BanhChung.State = PerfectlyBoiled;\n" +
+                           "    Worries.Clear();\n" +
+                           "    IsLonely = false;\n" +
+                           "}";
+                }
+                else if (hasWrappedCode)
                 {
                     return "// Recipe.Craft()\n" +
                            "BanhChung myBanh = new BanhChung();\n" +
