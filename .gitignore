@@ -10,6 +10,8 @@
 /[Uu]ser[Ss]ettings/
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
+.codex/
+**/.codex/
 
 # Asset meta data should only be ignored when on the same level as an ignored directory
 /[Aa]ssets/AssetStoreTools*
