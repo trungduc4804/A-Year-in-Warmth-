@@ -212,9 +212,47 @@ public class NPCInteractable : MonoBehaviour
                     string[] state6Lines = new string[]
                     {
                         "Chỉ còn ít phút nữa là thời khắc chuyển giao năm mới 00:00 gõ cửa.",
-                        "Tôi đã dọn dẹp bàn thờ gia tiên tinh tươm rồi. Lát nữa pháo hoa nổ, tôi sẽ thắp nén nhang trầm đầu tiên cầu bình an cho tất cả chúng ta..."
+                        "Tôi đã dọn dẹp bàn thờ gia tiên tinh tươm rồi. Tiếng pháo hoa nổ xa xa trên bầu trời chính là lúc tôi thắp nén nhang trầm đầu tiên...",
+                        "Arthur hãy chuẩn bị sẵn máy ảnh [Phím Space] nhé. Bắt trọn được khoảnh khắc linh thiêng này sẽ là kỷ niệm tuyệt vời nhất của chuyến đi đấy!"
                     };
                     DialogueManager.Instance.StartDialogue(speaker, state6Lines);
+                    return;
+
+                case QuestState.NewYearEvePhotoTaken:
+                    string[] state7Lines = new string[]
+                    {
+                        "Arthur... Cậu đã bấm máy bắt trọn được khoảnh khắc này rồi sao?",
+                        "(Bác An đón lấy bức ảnh, đôi mắt rưng rưng xúc động phản chiếu ánh sáng pháo hoa lung linh từ ô cửa sổ)",
+                        "Mấy mươi năm qua ở căn nhà cổ phố Hàng Bè này, đây là lần đầu tiên tôi có một bức ảnh đêm Giao Thừa trang trọng và ấm áp đến thế. Nhìn làn khói trầm bay lên, tôi cảm giác như ông bà tổ tiên và người thân đều đang mỉm cười...",
+                        "Cảm ơn người bạn già phương xa của tôi! Tình bạn của chúng ta vẫn vẹn nguyên như tách trà sen ngày đông.",
+                        "(Bác An kính cẩn rút từ túi áo ra một chiếc phong bao màu đỏ thắm, đặt trang trọng vào hai bàn tay Arthur)",
+                        "Tục lệ người Việt mình đầu năm phải mừng tuổi. Chiếc phong bao này có hai chữ 'Bình An'. Chúc cho Arthur một năm mới an khang, ấm áp và tìm thấy sự bình yên sâu thẳm trong tâm hồn!"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state7Lines, () =>
+                    {
+                        // 1. Thưởng quà: Phong bao lì xì + 50 Điểm Gắn Kết Bản Địa
+                        if (GameManager.Instance != null)
+                        {
+                            GameManager.Instance.AddLiXiReward();
+                            GameManager.Instance.SetQuestState(QuestState.Chapter1Complete);
+                        }
+
+                        // 2. Mở Modal hiển thị Bao Lì Xì trang trọng
+                        if (NewYearEveEventManager.Instance != null)
+                        {
+                            NewYearEveEventManager.Instance.ShowLiXiModal();
+                        }
+                    });
+                    return;
+
+                case QuestState.Chapter1Complete:
+                    string[] state8Lines = new string[]
+                    {
+                        "Chúc Mừng Năm Mới Arthur! Cậu hãy giữ gìn chiếc phong bao lì xì đỏ ấy nhé.",
+                        "Sáng mùng Một Tết, không khí Hà Nội thanh tịnh và thiêng liêng lắm. Chúng ta sẽ cùng tản bộ ra hồ Gươm ngắm người dân trẩy hội hái lộc đầu xuân...",
+                        "Cậu cứ tự nhiên mở Cuốn Album [Phím Tab] để ngắm lại trọn bộ những kỷ niệm của Chương 1 mà chúng ta vừa cùng nhau tạo nên nhé!"
+                    };
+                    DialogueManager.Instance.StartDialogue(speaker, state8Lines);
                     return;
             }
         }

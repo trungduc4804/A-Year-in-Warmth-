@@ -19,7 +19,9 @@ public enum QuestState
     Completed = 3,              // Alias tương thích ngược cho BanhChungUnlocked
     BanhChungWrapped = 4,       // Trạng thái 4: Đã gói xong bánh, ra sân canh nồi luộc
     BanhChungBoiled = 5,        // Trạng thái 5: Đã luộc chín bánh, uống trà sen cùng Bác An
-    WaitingForMidnight = 6      // Trạng thái 6: Sắp bước vào thời khắc Giao Thừa (chuẩn bị The Perfect Shot)
+    WaitingForMidnight = 6,     // Trạng thái 6: Sắp bước vào thời khắc Giao Thừa (chuẩn bị The Perfect Shot)
+    NewYearEvePhotoTaken = 7,   // Trạng thái 7: Đã chụp được bức ảnh The Perfect Shot Bác An thắp nhang
+    Chapter1Complete = 8        // Trạng thái 8: Bác An mừng tuổi Bao Lì Xì đỏ, hoàn thành Chương 1!
 }
 
 [DisallowMultipleComponent]
@@ -33,8 +35,11 @@ public class GameManager : MonoBehaviour
     public QuestState currentQuestState = QuestState.NotStarted;
 
     [Header("=== CÀI ĐẶT MỤC TIÊU ẢNH (TARGET SETTINGS) ===")]
-    [Tooltip("ID của mục tiêu cần chụp cho nhiệm vụ.")]
+    [Tooltip("ID của mục tiêu cần chụp cho nhiệm vụ cành đào.")]
     public string requiredTargetId = "PeachBlossom";
+
+    [Tooltip("ID của mục tiêu chụp đêm Giao Thừa (The Perfect Shot - Bác An thắp nhang bàn thờ).")]
+    public string newYearEveTargetId = "NewYearEveAltar";
 
     [Header("=== ÂM THANH HOÀN THÀNH MỤC TIÊU ===")]
     [Tooltip("Âm thanh chuông báo khi hoàn thành mục tiêu chụp ảnh.")]
@@ -48,11 +53,15 @@ public class GameManager : MonoBehaviour
     /// <summary> Bức ảnh cành đào phai đã chụp được lưu trong bộ nhớ </summary>
     public Texture2D QuestPhoto => questPhoto;
 
+    /// <summary> Bức ảnh The Perfect Shot đêm Giao Thừa </summary>
+    public Texture2D NewYearEvePhoto => newYearEvePhoto;
+
     public event Action<QuestState> OnQuestStateChanged;
     #endregion
 
     #region Private State
     private Texture2D questPhoto;
+    private Texture2D newYearEvePhoto;
     private AudioSource audioSource;
     private AudioClip successChimeClip;
 
@@ -144,7 +153,13 @@ public class GameManager : MonoBehaviour
                 ShowToast("🍵 [Bánh Đã Chín]: Hãy lại hiên nhà uống chén trà sen ấm cùng Bác An [Phím E]!");
                 break;
             case QuestState.WaitingForMidnight:
-                ShowToast("🎆 [Đêm Giao Thừa]: Chuẩn bị đón thời khắc chuyển giao năm mới cùng Bác An!");
+                ShowToast("🎆 [Đêm Giao Thừa]: Chuẩn bị máy ảnh [Space] đón thời khắc Giao Thừa 00:00 cùng Bác An!");
+                break;
+            case QuestState.NewYearEvePhotoTaken:
+                ShowToast("✨ [THE PERFECT SHOT]: Bắt trọn khoảnh khắc Giao Thừa! Hãy lại gặp Bác An [Phím E]!");
+                break;
+            case QuestState.Chapter1Complete:
+                ShowToast("🏮 [HOÀN THÀNH CHƯƠNG 1]: Chúc Mừng Năm Mới! Mở Cuốn Album [Tab] xem trọn bộ kỷ niệm!");
                 break;
         }
 
@@ -161,12 +176,16 @@ public class GameManager : MonoBehaviour
     [Tooltip("Đã hoàn thành canh chín nồi luộc bánh chưng đêm 30 Tết.")]
     public bool hasBoiledBanhChung = false;
 
+    [Tooltip("Đã nhận Phong Bao Lì Xì đỏ 'Bình An' từ Bác An mừng tuổi.")]
+    public bool hasLiXiKeepsake = false;
+
     [Tooltip("Chỉ số Gắn kết Bản địa (Cultural Affinity Meter - Biểu tượng Ấm Trà Sen).")]
     public int culturalAffinity = 0;
 
     public int BanhChungCount => banhChungCount;
     public bool HasBanhChungKeepsake => hasBanhChungKeepsake;
     public bool HasBoiledBanhChung => hasBoiledBanhChung;
+    public bool HasLiXiKeepsake => hasLiXiKeepsake;
     public int CulturalAffinity => culturalAffinity;
 
     /// <summary>
@@ -203,6 +222,22 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Nhận phần thưởng kết thúc Chương 1: Phong Bao Lì Xì "Bình An" (+50 Điểm Gắn Kết)
+    /// </summary>
+    public void AddLiXiReward()
+    {
+        hasLiXiKeepsake = true;
+        AddCulturalAffinity(50);
+        ShowToast("🏮 [KỶ VẬT CHƯƠNG 1]: Nhận Phong Bao Lì Xì 'Bình An' (+50 Điểm Gắn Kết) ✓");
+        PlayQuestSound();
+
+        if (AlbumUIController.Instance != null)
+        {
+            AlbumUIController.Instance.RefreshAlbumData();
+        }
+    }
+
+    /// <summary>
     /// Tăng điểm Gắn kết Bản địa (Cultural Affinity)
     /// </summary>
     public void AddCulturalAffinity(int points)
@@ -224,17 +259,34 @@ public class GameManager : MonoBehaviour
         PhotoTarget[] targets = FindObjectsByType<PhotoTarget>();
         foreach (PhotoTarget target in targets)
         {
+            // 1. Kiểm tra nhiệm vụ cành đào phai (Trạng thái 1)
             if (target.targetId == requiredTargetId)
             {
-                // Kiểm tra xem đối tượng có nằm trọn trong khung ngắm không
                 if (target.IsInViewfinder(cam, viewfinderRect, playerPosition))
                 {
-                    // Nếu đang ở Trạng thái 1, chuyển sang Trạng thái 2
                     if (currentQuestState == QuestState.QuestAccepted)
                     {
                         SetQuestState(QuestState.PhotoTaken);
                     }
                     break;
+                }
+            }
+
+            // 2. Kiểm tra nhiệm vụ The Perfect Shot Giao Thừa (Trạng thái 6)
+            bool isNewYearTarget = (target.targetId == newYearEveTargetId || 
+                                    target.targetId == "BacAnAltar" || 
+                                    target.targetId == "Altar" || 
+                                    (target.targetId == "BacAn" && currentQuestState == QuestState.WaitingForMidnight));
+            if (isNewYearTarget)
+            {
+                if (target.IsInViewfinder(cam, viewfinderRect, playerPosition))
+                {
+                    if (currentQuestState == QuestState.WaitingForMidnight)
+                    {
+                        newYearEvePhoto = snappedPhoto;
+                        SetQuestState(QuestState.NewYearEvePhotoTaken);
+                        break;
+                    }
                 }
             }
         }
@@ -350,8 +402,16 @@ public class GameManager : MonoBehaviour
                     statusColor = new Color(0.45f, 0.85f, 1.0f, 1f);
                     break;
                 case QuestState.WaitingForMidnight:
-                    questStatusText = "• Bước 7: Chuẩn bị máy ảnh [Space] đón thời khắc Giao Thừa 00:00 cùng Bác An.";
+                    questStatusText = "• Bước 7: Mở máy ảnh [Space] chụp Bác An thắp nhang giao thừa (The Perfect Shot).";
                     statusColor = new Color(1.0f, 0.85f, 0.55f, 1f);
+                    break;
+                case QuestState.NewYearEvePhotoTaken:
+                    questStatusText = "• Bước 8: Đã chụp được The Perfect Shot! Lại gặp Bác An [Phím E] nhận mừng tuổi.";
+                    statusColor = new Color(0.55f, 0.95f, 0.65f, 1f);
+                    break;
+                case QuestState.Chapter1Complete:
+                    questStatusText = "★ HOÀN THÀNH CHƯƠNG 1: Mở Cuốn Album [Tab] để xem trọn bộ kỷ niệm Tết Hà Nội!";
+                    statusColor = new Color(1.0f, 0.92f, 0.45f, 1f);
                     break;
             }
 
@@ -431,13 +491,32 @@ public class GameManager : MonoBehaviour
     [ContextMenu("Chuyển: Trạng thái 2 (Đã chụp ảnh cành đào phai)")]
     public void DebugSetState2() => SetQuestState(QuestState.PhotoTaken);
 
-    [ContextMenu("Chuyển: Trạng thái 3 (Hoàn thành nhiệm vụ)")]
-    public void DebugSetState3() => SetQuestState(QuestState.Completed);
+    [ContextMenu("Chuyển: Trạng thái 3 (Mời gói bánh chưng)")]
+    public void DebugSetState3() => SetQuestState(QuestState.BanhChungUnlocked);
+
+    [ContextMenu("Chuyển: Trạng thái 4 (Gói xong, canh nồi luộc)")]
+    public void DebugSetState4() => SetQuestState(QuestState.BanhChungWrapped);
+
+    [ContextMenu("Chuyển: Trạng thái 5 (Luộc chín, uống trà sen)")]
+    public void DebugSetState5() => SetQuestState(QuestState.BanhChungBoiled);
+
+    [ContextMenu("Chuyển: Trạng thái 6 (Chờ Giao Thừa 00:00)")]
+    public void DebugSetState6() => SetQuestState(QuestState.WaitingForMidnight);
+
+    [ContextMenu("Chuyển: Trạng thái 7 (Đã chụp The Perfect Shot)")]
+    public void DebugSetState7() => SetQuestState(QuestState.NewYearEvePhotoTaken);
+
+    [ContextMenu("Chuyển: Trạng thái 8 (Hoàn thành Chương 1)")]
+    public void DebugSetState8() => SetQuestState(QuestState.Chapter1Complete);
 
     [ContextMenu("Reset Nhiệm Vụ")]
     public void ResetQuest()
     {
         questPhoto = null;
+        newYearEvePhoto = null;
+        hasLiXiKeepsake = false;
+        hasBanhChungKeepsake = false;
+        hasBoiledBanhChung = false;
         SetQuestState(QuestState.NotStarted);
     }
     #endregion

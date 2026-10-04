@@ -64,6 +64,7 @@ public class AlbumUIController : MonoBehaviour
     private Texture2D whitePixel;
     private Texture2D darkPixel;
     private Texture2D banhChungIllustrationTex;
+    private Texture2D liXiIllustrationTex;
     private GUIStyle bookTitleStyle;
     private GUIStyle polaroidLabelStyle;
     private GUIStyle diaryHeaderStyle;
@@ -326,8 +327,17 @@ public class AlbumUIController : MonoBehaviour
                 }
                 return null;
 
-            case 2: // Trang 3: Lối Đi Mùa Thu / Kỷ Niệm Tự Do
-                if (ViewfinderController.Instance != null && ViewfinderController.Instance.LatestCapturedPhoto != null)
+            case 2: // Trang 3: The Perfect Shot & Phong Bao Lì Xì Đỏ "Bình An"
+                if (GameManager.Instance != null && GameManager.Instance.NewYearEvePhoto != null)
+                {
+                    return GameManager.Instance.NewYearEvePhoto;
+                }
+                if (GameManager.Instance != null && GameManager.Instance.HasLiXiKeepsake)
+                {
+                    if (liXiIllustrationTex == null) liXiIllustrationTex = GenerateLiXiKeepsakeTexture();
+                    return liXiIllustrationTex;
+                }
+                if (ViewfinderController.Instance != null && ViewfinderController.Instance.LatestCapturedPhoto != null && GameManager.Instance != null && GameManager.Instance.CurrentQuestState >= QuestState.NewYearEvePhotoTaken)
                 {
                     return ViewfinderController.Instance.LatestCapturedPhoto;
                 }
@@ -389,8 +399,20 @@ public class AlbumUIController : MonoBehaviour
                 }
 
             case 2:
-                return "Công Viên Mùa Thu & Khoảnh Khắc Bình Yên.\n" +
-                       "Những viên sỏi ấm trải dài dưới tán lá vàng ươm. Mỗi bước chân tản bộ ở đây đều khiến tâm hồn nhẹ bẫng như một làn mây trôi giữa tiết trời đầu xuân.";
+                bool hasMidnightCompleted = (GameManager.Instance != null && (GameManager.Instance.HasLiXiKeepsake || GameManager.Instance.CurrentQuestState >= QuestState.NewYearEvePhotoTaken));
+                if (hasMidnightCompleted)
+                {
+                    return "Hà Nội, thời khắc 00:00 Giao Thừa.\n" +
+                           "\"The Perfect Shot\" - Giây phút chuyển giao năm mới thiêng liêng.\n" +
+                           "Tiếng pháo hoa rền vang từ phía hồ Gươm, ánh sáng lung linh hắt qua ô cửa sổ cổ kính soi bóng Bác An đang chắp tay thành kính trước bàn thờ tổ tiên. " +
+                           "Chiếc phong bao lì xì đỏ thắm mang chữ \"Bình An\" Bác trao tặng như sưởi ấm trọn vẹn trái tim người lữ khách phương xa sau bao năm bôn ba...";
+                }
+                else
+                {
+                    return "Hà Nội, đêm 30 Tết.\n" +
+                           "Thời khắc Giao Thừa 00:00 đang đến rất gần. Bác An sẽ thắp nén nhang trầm đầu năm khi tiếng pháo hoa nổ vang trên bầu trời thủ đô.\n" +
+                           "Hãy sẵn sàng máy ảnh [Phím Space] để bắt trọn 'The Perfect Shot' của Chương 1!";
+                }
 
             default:
                 return "";
@@ -449,10 +471,17 @@ public class AlbumUIController : MonoBehaviour
                 }
 
             case 2:
-                return "// Environment.Trace()\n" +
-                       "ScenicPark park = World.GetCozyPlace();\n" +
-                       "park.BreatheAir();\n" +
-                       "Soul.State = CalmLevitate;";
+                bool completedCh1 = (GameManager.Instance != null && GameManager.Instance.CurrentQuestState == QuestState.Chapter1Complete);
+                return "// Chapter1_Hanoi_Tet.Finalize()\n" +
+                       "void Midnight_00_00() {\n" +
+                       "    Fireworks.SoundEcho(\"Ho Guom\");\n" +
+                       "    BacAn.PrayFor(\"Binh An\");\n" +
+                       "    Arthur.CapturePerfectShot();\n" +
+                       "    Inventory.Add(RedEnvelope_BinhAn);\n" +
+                       "    Heart.Warmth = MaxWarmth;\n" +
+                       "    Heart.IsLonely = false;\n" +
+                       $"    Chapter1.IsCompleted = {completedCh1.ToString().ToLower()};\n" +
+                       "}";
 
             default:
                 return "";
@@ -544,7 +573,7 @@ public class AlbumUIController : MonoBehaviour
         // Tiêu đề trang trái
         GUI.color = new Color(0.4f, 0.32f, 0.25f, openAnimProgress);
         string leftPageTitle = (currentPageIndex == 0) ? "CHƯƠNG 1: TẾT ẤM ÁP NƠI PHỐ CỔ" :
-                               (currentPageIndex == 1) ? "KỶ NIỆM: GÓI BÁNH CHƯNG TẾT" : "KHOẢNH KHẮC LƯU GIỮ";
+                               (currentPageIndex == 1) ? "KỶ NIỆM: GÓI BÁNH CHƯNG TẾT" : "CHƯƠNG 1: THE PERFECT SHOT";
         GUI.Label(new Rect(pageRect.x, pageRect.y, pageRect.width, 24 * scale), leftPageTitle, bookTitleStyle);
 
         // KHUNG ẢNH POLAROID
@@ -563,7 +592,9 @@ public class AlbumUIController : MonoBehaviour
         DrawFrameBorders(cardRect, 1.2f);
 
         // Băng dính Washi Tape trang trí góc trên tấm ảnh
-        GUI.color = (currentPageIndex == 1) ? new Color(0.35f, 0.65f, 0.40f, 0.85f * openAnimProgress) : new Color(0.82f, 0.62f, 0.55f, 0.85f * openAnimProgress);
+        GUI.color = (currentPageIndex == 1) ? new Color(0.35f, 0.65f, 0.40f, 0.85f * openAnimProgress) :
+                    (currentPageIndex == 2) ? new Color(0.85f, 0.22f, 0.20f, 0.85f * openAnimProgress) :
+                    new Color(0.82f, 0.62f, 0.55f, 0.85f * openAnimProgress);
         GUI.DrawTexture(new Rect(cardRect.x + 12, cardRect.y - 8, 45 * scale, 16 * scale), whitePixel);
         GUI.DrawTexture(new Rect(cardRect.xMax - 55 * scale, cardRect.y - 8, 45 * scale, 16 * scale), whitePixel);
 
@@ -588,7 +619,7 @@ public class AlbumUIController : MonoBehaviour
             Rect captionRect = new Rect(cardRect.x + 8, photoRect.yMax + 6, cardRect.width - 16, cardRect.yMax - photoRect.yMax - 10);
             string photoCaption = (currentPageIndex == 0)
                 ? "Ngày 29 Tết - Cành đào đầu tiên của bác An"
-                : (currentPageIndex == 1) ? "Ngày 29 Tết - Chiếc Bánh Chưng đầu tiên của Arthur" : "Công viên mùa thu rực rỡ";
+                : (currentPageIndex == 1) ? "Ngày 29 Tết - Chiếc Bánh Chưng đầu tiên của Arthur" : "Giao Thừa 00:00 - Bác An thắp nhang cầu Bình An";
             GUI.Label(captionRect, photoCaption, polaroidLabelStyle);
         }
         else
@@ -605,7 +636,7 @@ public class AlbumUIController : MonoBehaviour
                 ? "📷 [Chưa có ảnh]\nHãy mở máy ảnh [Space] chụp cành đào phai\nđể ghim trang trọng vào trang bìa này!"
                 : (currentPageIndex == 1)
                 ? "🎋 [Mẩu Kỷ Niệm Đang Chờ]\nHãy đến manh chiếu bên cạnh Bác An\nbấm [E] hoặc [B] để tự tay gói bánh chưng!"
-                : "📷 [Chưa có ảnh]\nHãy mở máy ảnh ghi lại khoảnh khắc!";
+                : "🎆 [The Perfect Shot Đang Chờ]\nKhi tiếng pháo hoa Giao thừa nổ vang,\nhãy mở máy ảnh [Space] chụp Bác An thắp nhang\nđể nhận Phong Bao Lì Xì và hoàn thành Chương 1!";
             GUI.Label(photoRect, hint, emptyHintStyle);
         }
     }
@@ -618,7 +649,7 @@ public class AlbumUIController : MonoBehaviour
         // 1. Tiêu đề nhật ký & Ngày tháng
         GUI.color = new Color(0.35f, 0.28f, 0.22f, openAnimProgress);
         string headerTitle = (currentPageIndex == 0) ? "KÝ ỨC #01: CÀNH ĐÀO ĐẦU TIÊN CỦA BÁC AN" :
-                             (currentPageIndex == 1) ? "KÝ ỨC #02: NỒI BÁNH CHƯNG ĐÊM 29 TẾT" : "KÝ ỨC #03: KHOẢNH KHẮC TỰ DO";
+                             (currentPageIndex == 1) ? "KÝ ỨC #02: NỒI BÁNH CHƯNG ĐÊM 29 TẾT" : "KÝ ỨC #03: GIAO THỪA 00:00 & THE PERFECT SHOT";
         GUI.Label(new Rect(pageRect.x, pageRect.y, pageRect.width, 24 * scale), headerTitle, diaryHeaderStyle);
 
         // Đường kẻ gạch chân trang trí
@@ -772,6 +803,82 @@ public class AlbumUIController : MonoBehaviour
                         if (x >= 62 && x <= 66 && y >= 62 && y <= 66)
                         {
                             cols[idx] = goldDot;
+                        }
+                    }
+                }
+            }
+        }
+
+        tex.SetPixels(cols);
+        tex.Apply();
+        return tex;
+    }
+
+    private Texture2D GenerateLiXiKeepsakeTexture()
+    {
+        int size = 128;
+        Texture2D tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        Color[] cols = new Color[size * size];
+
+        Color parchmentBg = new Color(0.92f, 0.88f, 0.82f, 1f);
+        Color shadow = new Color(0.2f, 0.15f, 0.12f, 0.45f);
+        Color envRed = new Color(0.85f, 0.18f, 0.15f, 1f);
+        Color flapDarkRed = new Color(0.70f, 0.12f, 0.10f, 1f);
+        Color goldTrim = new Color(0.98f, 0.85f, 0.35f, 1f);
+        Color goldEmblem = new Color(1.0f, 0.92f, 0.55f, 1f);
+
+        int minX = 36;
+        int maxX = 92;
+        int minY = 18;
+        int maxY = 110;
+
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                int idx = y * size + x;
+                cols[idx] = parchmentBg;
+
+                // Bóng đổ
+                if (x >= minX + 5 && x <= maxX + 5 && y >= minY - 5 && y <= maxY - 5)
+                {
+                    cols[idx] = Color.Lerp(cols[idx], shadow, 0.55f);
+                }
+
+                // Thân bao lì xì đỏ
+                if (x >= minX && x <= maxX && y >= minY && y <= maxY)
+                {
+                    cols[idx] = envRed;
+
+                    // Viền vàng kim 2px
+                    bool isBorder = (x == minX || x == minX + 1 || x == maxX || x == maxX - 1 ||
+                                     y == minY || y == minY + 1 || y == maxY || y == maxY - 1);
+                    if (isBorder)
+                    {
+                        cols[idx] = goldTrim;
+                    }
+
+                    // Nắp gập tam giác phía trên
+                    if (y >= maxY - 20)
+                    {
+                        cols[idx] = flapDarkRed;
+                        if (y == maxY - 20 || y == maxY - 19)
+                        {
+                            cols[idx] = goldTrim;
+                        }
+                    }
+
+                    // Hình thoi vàng dát kim chữ Bình An ở giữa
+                    int midX = 64;
+                    int midY = 56;
+                    int dist = Mathf.Abs(x - midX) + Mathf.Abs(y - midY);
+                    if (dist <= 16)
+                    {
+                        cols[idx] = (dist >= 14) ? goldTrim : flapDarkRed;
+                        // Tâm chữ vàng
+                        if (dist <= 6)
+                        {
+                            cols[idx] = goldEmblem;
                         }
                     }
                 }
